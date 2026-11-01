@@ -9,6 +9,7 @@
   <link rel="canonical" href="https://deskauth.com/download.html">
   <link rel="icon" href="favicon.ico">
   <link rel="stylesheet" href="css/site.css">
+  <script src="js/analytics.js" async></script>
 </head>
 <body>
   <header class="site-header">
@@ -35,17 +36,23 @@
       </div>
 
       <div class="card">
-        <h3>Requirements</h3>
+        <h3>Which file?</h3>
         <ul>
-          <li>Windows 10 or Windows 11</li>
-          <li>The <a href="https://dotnet.microsoft.com/download/dotnet/10.0">.NET 10 Desktop Runtime</a>. Windows will offer to install it the first time you run DeskAuth if you don't already have it.</li>
+          <li><strong>DeskAuth-<em>version</em>-x64.exe</strong>: for most Windows PCs. Needs the <a href="https://dotnet.microsoft.com/download/dotnet/10.0">.NET 10 Desktop Runtime</a>; Windows offers to install it the first time you run DeskAuth if you don't already have it.</li>
+          <li><strong>DeskAuth-<em>version</em>-arm64.exe</strong>: for Windows on ARM PCs, such as Snapdragon laptops. Also needs the .NET 10 Desktop Runtime.</li>
+          <li><strong>DeskAuth-<em>version</em>-x64-standalone.exe</strong>: includes .NET, so it is larger but needs nothing else installed.</li>
         </ul>
+        <p>DeskAuth runs on Windows 10 and Windows 11. <code>SHA256SUMS.txt</code> lists the checksum of each file.</p>
+      </div>
+
+      <div class="callout">
+        <p><strong>Windows SmartScreen</strong> may say it "protected your PC" the first time you run DeskAuth, because the program is new and not yet code signed. Check you downloaded it from the GitHub releases page, then choose <strong>More info</strong> and <strong>Run anyway</strong>.</p>
       </div>
 
       <h2>Getting started</h2>
       <ol>
-        <li>Download <code>DeskAuth.exe</code> and put it anywhere you like. There is nothing to install.</li>
-        <li>Run <code>DeskAuth.exe</code> and click <strong>Add</strong>.</li>
+        <li>Download the file for your PC and put it anywhere you like, for example in a <code>DeskAuth</code> folder in your Documents. There is nothing to install.</li>
+        <li>Run it and click <strong>Add</strong>.</li>
         <li>On the website you want to protect, turn on two-factor authentication and choose the authenticator app option.</li>
         <li>Paste the secret key or link the website shows, or take a screenshot of its QR code (Win+Shift+S) and click <strong>Paste QR code image</strong>.</li>
         <li>Check the code matches what the website asks for, and click <strong>Add</strong>.</li>
