@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<WinAuth version="3.6">
+  <alwaysontop>true</alwaysontop>
+  <usetrayicon>true</usetrayicon>
+  <notifyaction>Notification</notifyaction>
+  <startwithwindows>false</startwithwindows>
+  <autosize>true</autosize>
+  <width>0</width>
+  <height>0</height>
+  <WinAuthAuthenticator id="170c4e9b-57fa-402f-8bc5-9631854b4db8" type="WinAuth.GoogleAuthenticator">
+    <name>Totp SHA1</name>
+    <created>1793567323422</created>
+    <autorefresh>true</autorefresh>
+    <allowcopy>false</allowcopy>
+    <copyoncode>false</copyoncode>
+    <hideserial>false</hideserial>
+    <skin>GitHubIcon.png</skin>
+    <authenticatordata>
+      <servertimediff>0</servertimediff>
+      <lastservertime>0</lastservertime>
+      <secretdata>48656C6C6F21DEADBEEF	6	SHA1	30</secretdata>
+    </authenticatordata>
+  </WinAuthAuthenticator>
+  <WinAuthAuthenticator id="a71ccbf5-2b5e-471d-b151-82165324046e" type="WinAuth.GoogleAuthenticator">
+    <name>Totp SHA256</name>
+    <created>1793567323439</created>
+    <autorefresh>true</autorefresh>
+    <allowcopy>false</allowcopy>
+    <copyoncode>false</copyoncode>
+    <hideserial>false</hideserial>
+    <skin>GitHubIcon.png</skin>
+    <authenticatordata>
+      <servertimediff>0</servertimediff>
+      <lastservertime>0</lastservertime>
+      <secretdata>3132333435363738393031323334353637383930	8	SHA256	60</secretdata>
+    </authenticatordata>
+  </WinAuthAuthenticator>
+  <WinAuthAuthenticator id="3eafebb6-b412-43f3-90ba-1547bfcac6cb" type="WinAuth.HOTPAuthenticator">
+    <name>Hotp</name>
+    <created>1793567323440</created>
+    <autorefresh>false</autorefresh>
+    <allowcopy>false</allowcopy>
+    <copyoncode>false</copyoncode>
+    <hideserial>false</hideserial>
+    <skin></skin>
+    <authenticatordata>
+      <servertimediff>0</servertimediff>
+      <lastservertime>0</lastservertime>
+      <secretdata>3132333435363738393031323334353637383930	6	SHA1	30|5</secretdata>
+    </authenticatordata>
+  </WinAuthAuthenticator>
+  <WinAuthAuthenticator id="39367c14-7047-43c3-9776-bc6239d880a0" type="WinAuth.GoogleAuthenticator">
+    <name>Protected</name>
+    <created>1793567323447</created>
+    <autorefresh>true</autorefresh>
+    <allowcopy>false</allowcopy>
+    <copyoncode>false</copyoncode>
+    <hideserial>false</hideserial>
+    <skin>GitHubIcon.png</skin>
+    <authenticatordata encrypted="y">57494E415554483392AD9962CBF391DAED12E5C1AF85958E55C6E9F3D6B77B7E73E92E80C12625DA56395D4BAA212B7AE9C5F3D6294329564B776EB6C0BC162746F22D93F08E215019B6D06E8CD2823B6E1ED7ADEEF453E8EDD38371546C6BE9F4F6E0145C11912A3F64BC6C9837B36391F104CE31282B0F2DA031D512538E9D586D17F2C1641E2157461D32864135AAC3BFC280F43E2ECA2A7CDF4EE35193803EB77CC8F2AE306FF024D1143A3F8FA1D739D1645FDE3BD95EA4A50B5B60382BB5461319590948420201A25C10D50FB78C732F7D7AB3D80C755C51B95912C8ADC80D406AD638C72FC1FBC5B16B83A2986689A7505A8310EAE24A9729D0F1468CFBD09F5FD05D47CAD20BE5D1EB534BF6A639BDF18A62C729052D6C1534D967652F18EFA32E55E35F7A7ACCED63774031</authenticatordata>
+  </WinAuthAuthenticator>
+  <WinAuthAuthenticator id="2cce0250-3c24-4519-a26e-e15e864979ce" type="WinAuth.MicrosoftAuthenticator">
+    <name>Microsoft</name>
+    <created>1793567323782</created>
+    <autorefresh>true</autorefresh>
+    <allowcopy>false</allowcopy>
+    <copyoncode>false</copyoncode>
+    <hideserial>false</hideserial>
+    <skin></skin>
+    <authenticatordata>
+      <servertimediff>0</servertimediff>
+      <lastservertime>0</lastservertime>
+      <secretdata>6162636465666768696A	6	SHA1	30</secretdata>
+    </authenticatordata>
+  </WinAuthAuthenticator>
+  <WinAuthAuthenticator id="b66ac6b8-d699-43b1-b2a4-e7a53244463b" type="WinAuth.BattleNetAuthenticator">
+    <name>Battle.net</name>
+    <created>1793567323783</created>
+    <autorefresh>true</autorefresh>
+    <allowcopy>false</allowcopy>
+    <copyoncode>false</copyoncode>
+    <hideserial>false</hideserial>
+    <skin></skin>
+    <authenticatordata>
+      <servertimediff>0</servertimediff>
+      <lastservertime>0</lastservertime>
+      <secretdata>3132333435363738393031323334353637383930	8	SHA1	30|55532D313233342D353637382D39303132</secretdata>
+    </authenticatordata>
+  </WinAuthAuthenticator>
+</WinAuth>

@@ -1,0 +1,36 @@
+<Window x:Class="DeskAuth.Views.IconPickerDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Choose icon"
+        Width="500"
+        SizeToContent="Height"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        WindowStartupLocation="CenterOwner"
+        FocusManager.FocusedElement="{Binding ElementName=UrlField}">
+    <StackPanel Margin="20">
+        <DockPanel Margin="0,0,0,16">
+            <Border Width="56" Height="56" CornerRadius="10" Background="White" DockPanel.Dock="Left" Margin="0,0,16,0">
+                <Image x:Name="CurrentIcon" Width="44" Height="44" RenderOptions.BitmapScalingMode="HighQuality" />
+            </Border>
+            <TextBlock VerticalAlignment="Center" TextWrapping="Wrap"
+                       Text="Get an icon from a website or image, or choose an image file. Authenticators without an icon show the DeskAuth logo." />
+        </DockPanel>
+
+        <TextBlock Text="Website or image address" Margin="0,0,0,4" />
+        <DockPanel>
+            <Button x:Name="GetIconButton" Content="Get icon" DockPanel.Dock="Right" MinWidth="90" Margin="8,0,0,0"
+                    Click="GetIconButton_Click" Style="{DynamicResource AccentButtonStyle}" />
+            <TextBox x:Name="UrlField" PreviewKeyDown="UrlField_PreviewKeyDown"
+                     AutomationProperties.Name="Website or image address" />
+        </DockPanel>
+        <TextBlock x:Name="UrlStatus" TextWrapping="Wrap" Margin="0,6,0,0" Opacity="0.8"
+                   Text="Enter a website, such as github.com, to use the icon it shows in your browser, or the address of an image." />
+
+        <DockPanel Margin="0,20,0,0" LastChildFill="False">
+            <Button Content="Image file..." DockPanel.Dock="Left" Click="FileButton_Click" />
+            <Button Content="Use DeskAuth logo" DockPanel.Dock="Left" Margin="8,0,0,0" Click="DefaultButton_Click" />
+            <Button Content="Cancel" DockPanel.Dock="Right" MinWidth="80" IsCancel="True" />
+        </DockPanel>
+    </StackPanel>
+</Window>

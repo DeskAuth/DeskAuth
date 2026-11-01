@@ -1,20 +1,52 @@
-# How to compile WinAuth
+# How to compile DeskAuth
 
-## Windows (Visual Studio) 
+## Prerequisites
 
-### Prerequisites
+* [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
+* Optionally, Visual Studio 2026 with the **.NET desktop development** workload
 
-* Visual Studio 2017
-* Windows 8.1 SDK
+## Projects
 
-### Installation
+| Project | Description |
+|---|---|
+| `src/DeskAuth.Core` | Authenticators, encryption and the config file format. No UI. |
+| `src/DeskAuth` | The WPF application |
+| `tests/DeskAuth.Core.Tests` | Unit tests, including WinAuth 3 config files in `Fixtures` |
 
-1. Install Visual Studio 2017. In the installer's component selection "Individual components", make sure to enable "Windows 8.1 SDK". See [screenshot](https://stackoverflow.com/questions/43704734/how-to-fix-the-error-windows-sdk-version-8-1-was-not-found/43888773#43888773).
-2. Git clone or download and extract the codebase.
+The only third-party package used by the app is [ZXing.Net](https://github.com/micjahn/ZXing.Net), for reading and creating QR codes.
 
-### Building
+## Building
 
-1. Before starting, make sure to backup your `%AppData%\WinAuth\winauth.xml` file or export your authenticators to prevent data loss.
-2. Open the solution file `Net4.5\WinAuth.sln` or `Net3.5\WinAuth-Net3.5.sln` in Visual Studio.
-3. Visual Studio > Build > Build Solution.
-4. If successful, the executable location should be `bin\Debug\WinAuth.exe` in the solution directory.
+Before testing with your own authenticators, back up `%APPDATA%\DeskAuth\deskauth.xml`, or run DeskAuth with a copy: `DeskAuth.exe path\to\copy.xml`.
+
+From the command line:
+
+```
+dotnet build
+dotnet test
+```
+
+Or open `DeskAuth.sln` in Visual Studio and build. The app is built to `src\DeskAuth\bin\Debug\net10.0-windows\DeskAuth.exe`.
+
+## Publishing
+
+To create a single `DeskAuth.exe` that needs the .NET 10 Desktop Runtime installed:
+
+```
+dotnet publish src/DeskAuth -c Release -r win-x64 --self-contained false -p:PublishSingleFile=true -o publish
+```
+
+For a larger exe that runs without .NET installed, use `--self-contained true`. Use `-r win-arm64` for ARM devices.
+
+## Testing
+
+`dotnet test` covers the code generation (RFC 4226 and RFC 6238 test vectors), encryption, reading WinAuth 3 files, and `otpauth://` links.
+
+Also check by hand, using a copy of a config file:
+
+1. Add a TOTP authenticator from a key, a link and a QR code image, and check the codes match another authenticator app.
+2. Set a password on the file with **Change protection**, restart DeskAuth and unlock it.
+3. Set a password on one authenticator, then show its code.
+4. Assign a shortcut key and use it to type a code into another program.
+5. Export, then import the export into an empty config.
+6. Check the window at 100% and 200% display scaling, and in light and dark mode.

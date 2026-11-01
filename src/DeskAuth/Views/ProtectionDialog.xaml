@@ -1,0 +1,48 @@
+<Window x:Class="DeskAuth.Views.ProtectionDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Protection"
+        Width="500"
+        SizeToContent="Height"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        WindowStartupLocation="CenterOwner">
+    <StackPanel Margin="20">
+        <TextBlock TextWrapping="Wrap" Margin="0,0,0,16"
+                   Text="Choose how to protect your authenticators. A password is strongly recommended, otherwise your secrets could be read by malware running on your computer." />
+
+        <CheckBox x:Name="PasswordCheck" Content="Protect with my own password" Checked="PasswordCheck_Changed" Unchecked="PasswordCheck_Changed" />
+        <TextBlock TextWrapping="Wrap" Margin="28,4,0,8" Opacity="0.8"
+                   Text="You will need this password every time you open DeskAuth. If you forget it, your authenticators cannot be recovered." />
+        <Grid x:Name="PasswordFields" Margin="28,0,0,0" IsEnabled="False">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <TextBlock Text="Password" VerticalAlignment="Center" Margin="0,0,12,0" />
+            <PasswordBox x:Name="PasswordField" Grid.Column="1" />
+            <TextBlock Text="Confirm" Grid.Row="1" VerticalAlignment="Center" Margin="0,8,12,0" />
+            <PasswordBox x:Name="ConfirmField" Grid.Row="1" Grid.Column="1" Margin="0,8,0,0" />
+        </Grid>
+
+        <Separator Margin="0,16" />
+
+        <CheckBox x:Name="MachineCheck" Content="Encrypt so it can only be used on this computer"
+                  Checked="MachineCheck_Changed" Unchecked="MachineCheck_Changed" />
+        <CheckBox x:Name="UserCheck" Content="...and only by the current Windows user" Margin="28,8,0,0" IsEnabled="False" />
+        <TextBlock TextWrapping="Wrap" Margin="28,4,0,0" Opacity="0.8"
+                   Text="Your authenticators will not open on another computer or Windows account, so export them first if you reinstall Windows." />
+
+        <TextBlock x:Name="ErrorText" Foreground="{DynamicResource SystemFillColorCriticalBrush}"
+                   TextWrapping="Wrap" Margin="0,12,0,0" Visibility="Collapsed" />
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+            <Button Content="OK" MinWidth="80" IsDefault="True" Click="OkButton_Click" Style="{DynamicResource AccentButtonStyle}" />
+            <Button Content="Cancel" MinWidth="80" Margin="8,0,0,0" IsCancel="True" />
+        </StackPanel>
+    </StackPanel>
+</Window>

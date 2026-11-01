@@ -1,130 +1,202 @@
 <!doctype html>
-<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
-<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
-<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
-
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width" />
-
-<link rel="shortcut icon" type="image/ico" href="favicon.ico">
-
-<title>Windows Authenticator for Google, Blizzard, Guild Wars, Rift</title>
-<meta name="description" content="Open-source Windows Authenticator supporting Google Authenticator, Microsoft and games Battle.net for World of Warcraft, Diablo III, Guild Wars 2, Rift." />
-<meta property="og:locale" content="en_US" />
-<meta property="og:type" content="website" />
-<meta property="og:title" content="Windows Authenticator for Google, Blizzard, Guild Wars, Rift" />
-<meta property="og:description" content="Open-source Windows Authenticator supporting Google Authenticator, Microsoft and games Battle.net for World of Warcraft, Diablo III, Guild Wars 2, Rift." />
-<meta property="og:url" content="https://winauth.com/" />
-<meta property="og:site_name" content="WinAuth" />
-<meta property="og:image" content="images/2013/07/winauth3-preview.png" />
-<meta property="og:image" content="images/2013/07/steamconf1.png" />
-<script type="application/ld+json">{ "@context": "http://schema.org", "@type": "WebSite", "url": "https://winauth.com/", "potentialAction": { "@type": "SearchAction", "target": "https://winauth.com/?s={search_term}", "query-input": "required name=search_term" } }</script>
-
-<link rel='stylesheet' id='reverie-stylesheet-css' href='css/style.css' type='text/css' media='all' />
-<!--[if lt IE 9]>
-<link rel='stylesheet' id='reverie-ie-only-css'  href='css/ie.css' type='text/css' media='all' />
-<![endif]-->
-<script type='text/javascript' src='js/vendor/custom.modernizr.js'></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DeskAuth - Two-factor authenticator for Windows</title>
+  <meta name="description" content="DeskAuth is a free, open-source two-factor authenticator for Windows. It generates TOTP and HOTP codes for GitHub, Microsoft, Google, Amazon and any site that supports authenticator apps.">
+  <meta name="color-scheme" content="light dark">
+  <link rel="canonical" href="https://deskauth.com/">
+  <link rel="icon" href="favicon.ico">
+  <link rel="stylesheet" href="css/site.css">
 </head>
-<body class="home page page-id-2 page-template-default">
-<div class="contain-to-grid">
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="index.html"><img src="images/logo-64.png" alt="" width="32" height="32">DeskAuth</a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="index.html" aria-current="page">Home</a>
+        <a href="#features">Features</a>
+        <a href="download.html">Download</a>
+        <a href="help.html">Help</a>
+        <a href="https://github.com/DeskAuth/deskauth">GitHub</a>
+      </nav>
+    </div>
+  </header>
 
-<nav class="top-bar">
-<ul class="title-area">
+  <main>
+    <div class="hero">
+      <div class="container">
+        <div>
+          <h1>Your two-factor codes, on your Windows desktop</h1>
+          <p class="lead">DeskAuth is a free, open-source authenticator for Windows. It generates the six or eight digit codes used to sign in to GitHub, Microsoft, Google, Amazon and any website that supports authenticator apps.</p>
+          <div class="buttons">
+            <a class="button primary" href="download.html">Download DeskAuth</a>
+            <a class="button" href="https://github.com/DeskAuth/deskauth">View source</a>
+          </div>
+          <p class="note">For Windows 10 and 11. Portable, no installation, no account, and your secrets never leave your computer.</p>
+        </div>
+        <div class="hero-shot stage">
+          <picture>
+            <source srcset="images/screenshots/main-dark.png" media="(prefers-color-scheme: dark)">
+            <img src="images/screenshots/main.png" width="441" height="458" alt="The DeskAuth window showing codes for GitHub, Amazon, Cloudflare, GitLab, Microsoft and Google">
+          </picture>
+        </div>
+      </div>
+    </div>
 
-<li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
-</ul>
-<section class="top-bar-section">
-<ul class="left"><li class="divider"></li><li id="menu-item-16" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-2 current_page_item menu-item-16 active"><a href="index.html">Home</a></li>
-<li class="divider"></li><li id="menu-item-71" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-71"><a href="download.html">Download</a></li>
-</ul> <ul class="right">
-<li class="divider hide-for-small"></li>
-</ul>
-</section>
-</nav>
+    <section id="features">
+      <div class="container">
+        <h2>Everything you need, nothing you don't</h2>
+        <p class="section-intro">DeskAuth uses the standard time-based (TOTP, RFC 6238) and counter-based (HOTP, RFC 4226) algorithms, so it works with any service that offers an authenticator app.</p>
+        <div class="feature-grid">
+          <div class="feature">
+            <h3>Add in seconds</h3>
+            <p>Paste the secret key or <code>otpauth://</code> link, or use a screenshot of the QR code from the clipboard or a file.</p>
+          </div>
+          <div class="feature">
+            <h3>Strong encryption</h3>
+            <p>Protect your authenticators with a password (PBKDF2-SHA256 and AES-256-GCM), and lock them to this computer or Windows account.</p>
+          </div>
+          <div class="feature">
+            <h3>Codes at your fingertips</h3>
+            <p>Double-click to copy, or use a shortcut key to type the code into any program. Quick access from the system tray.</p>
+          </div>
+          <div class="feature">
+            <h3>Recognisable icons</h3>
+            <p>Use the icon a website shows in your browser, any image, or the DeskAuth logo.</p>
+          </div>
+          <div class="feature">
+            <h3>Move freely</h3>
+            <p>Import and export the <code>otpauth://</code> format used by other authenticator apps, or show a QR code to set up your phone.</p>
+          </div>
+          <div class="feature">
+            <h3>Modern and sharp</h3>
+            <p>Light and dark themes that follow Windows, and crisp text at any display scaling. Built on .NET 10.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-</div>
-<header class="row" role="banner">
-<div class="small-12 columns">
-<h1><a href="index.html" title="WinAuth">WinAuth</a></h1>
-<h4 class="subheader">Portable open-source Authenticator for Windows</h4>
-<hr />
-</div>
-</header>
+    <section>
+      <div class="container">
+        <div class="showcase">
+          <div class="showcase-text">
+            <h2>Add an authenticator</h2>
+            <p>When a website shows you a QR code to set up two-factor authentication, take a screenshot of it (Win+Shift+S) and click <strong>Paste QR code image</strong>, or paste the secret key or link it shows instead.</p>
+            <p>DeskAuth fills in the name and settings and shows the current code, so you can check it matches before you finish.</p>
+          </div>
+          <div class="stage">
+            <picture>
+              <source srcset="images/screenshots/add-dark.png" media="(prefers-color-scheme: dark)">
+              <img src="images/screenshots/add.png" width="541" height="510" alt="The Add authenticator dialog with a GitHub link filled in and the current code shown" loading="lazy">
+            </picture>
+          </div>
+        </div>
 
-<section class="container" role="document">
-<div class="row">
+        <div class="showcase reverse">
+          <div class="showcase-text">
+            <h2>Everything is a right-click away</h2>
+            <p>Right-click any authenticator to copy its code, rename it, change its icon, add a password, assign a shortcut key, or show its secret key.</p>
+            <ul>
+              <li>Show codes continuously, or only when you click</li>
+              <li>Copy each new code to the clipboard automatically</li>
+              <li>Drag authenticators to put them in any order</li>
+            </ul>
+          </div>
+          <div class="stage">
+            <picture>
+              <source srcset="images/screenshots/menu-dark.png" media="(prefers-color-scheme: dark)">
+              <img src="images/screenshots/menu.png" width="485" height="493" alt="The right-click menu for an authenticator" loading="lazy">
+            </picture>
+          </div>
+        </div>
 
-<div class="small-12 large-12 columns" role="main">
-<article class="post-2 page type-page status-publish hentry" id="post-2">
-<header>
-</header>
-<div class="entry-content">
-<p><em>WinAuth is a portable, open-source Authenticator for Windows that provides counter or time-based RFC 6238 authenticators and common implementations, such as the Google Authenticator. WinAuth can be used with many Bitcoin trading websites as well as games, supporting Battle.net (World of Warcraft, Hearthstone, Heroes of the Storm, Diablo), Guild Wars 2, Glyph (Rift and ArcheAge), WildStar, RuneScape, SWTOR and Steam.</em></p>
-<p><em>The project is open-source and hosted at <a href="https://github.com/winauth/winauth" target="_blank">https://github.com/winauth/winauth</a>.</em></p>
-<figure><a href="images/2013/07/winauth3-preview.png"><img class="alignnone" alt="winauth3-preview" src="images/2013/07/winauth3-preview.png" /></a></figure>
-<p>WinAuth provides an alternative solution to combine various two-factor authenticator services in one convenient place.</p>
-<hr />
-<h3>Downloads</h3>
-<p><a href="https://github.com/winauth/winauth/releases" title="Download">Stable and Beta Downloads</a></p>
-<h3>Latest Stable Download &#8211; 3.5</h3>
-<p>This current version of WinAuth.</p>
-<h5>New Features in 3.5</h5>
-<p>This version adds support for Steam trading confirmations.</p>
-<figure><img src="images/2013/07/steamconf1.png" alt="steamconf" class="aligncenter" style="max-width:600px;" /></figure>
-<hr />
-<h3>Features</h3</p>
-<h4>Support for multiple Authenticator services</h4>
-<p>WinAuth supports any service or website that uses the <a title="Google Authenticator" href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2" target="_blank">Google Authenticator</a>, Microsoft Authenticator or an RFC 6283 based authenticator. It also supports games such as Battle.Net (World of Warcraft, Hearthstone, Diablo III), GuildWars 2, Glyph, WildStar, Runescape, SWTOR and Steam.</p>
-<h4>Portable</h4>
-<p>WinAuth requires no installation and is a single executable file, and so can be run from a USB drive or stored and run from cloud files services such as DropBox, Google Drive, or SkyDrive.</p>
-<p>If your configuration file (<code>winauth.xml</code>, normally stored in your Windows roaming profile) is in the same folder as the WinAuth program, it will use that instead and switch into &#8220;portable&#8221; mode, not saving any other information to the computer.</p>
-<p><a href="http://www.microsoft.com/en-us/download/details.aspx?id=30653" target="_blank">Microsoft .NET Framework 4.5</a> is required.</p>
-<h4>Multiple Authenticators</h4>
-<p>An unlimited number of authenticators can be stored, each with their own personalized name and icon for quick reference. The WinAuth application can be sized as preferred or automatically displayed to fit.</p>
-<h4>Automatic or On-Demand</h4>
-<p>Each authenticator can be set to automatically display and refresh the current code or to only calculate and show the code when clicked.</p>
-<h4>Security and Encryption</h4>
-<p>All private authenticator data is encrypted with your own personal password, salted and enhanced with key strengthening to reduce the ability for brute force attacks. The data can also be protected using Windows in-built Data Protection API, which will &#8220;lock&#8221; the data to a single computer or account, making it completely unusable if copied to another computer.</p>
-<p>A YubiKey can be used to further enchance the protection by providing a secret key stored only on the YubiKey itself, and must be physically plugged into the computer before WinAuth can be opened.</p>
-<p>Each authenticator can also additionally have its own secondary password that is required before any codes are decrypted, calculated and displayed.</p>
-<p>Finally, all codes are drawn directly onto the screen to prevent any malware from &#8220;windows spying&#8221;.</p>
-<h4>Hot-keys</h4>
-<p>Each authenticator can be assigned a hot-key to notify, display, clipboard copy or inject the current code into another application. An advanced injection script can also be created to automate username, password and code entry. Scripts are part of the private data and also fully encrypted along with the authenticator data.</p>
-<p>&nbsp;</p>
-</div>
-<footer>
-<p></p>
-</footer>
-</article>
-</div>
-</div>
-</section>
-<div class="row full-width">
-</div>
-<footer class="row full-width" role="contentinfo">
-<div>
-<div class="small-12 large-4 columns"><p>Copyright &copy; 2010-2017. Colin Mackie.</p></div>
-<div class="small-12 large-8 columns"></div>
-</div>
-</footer>
-<script type="text/javascript">(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-ga('create', 'UA-17831830-3', 'winauth.com');
-ga('require', 'displayfeatures');
-ga('send', 'pageview');</script>
-<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'></script>
-<script type='text/javascript' src='js/jQuery-noConflict.js'></script>
-<script type='text/javascript' src='js/foundation.min.js'></script>
-<script>
-	(function($) {
-		$(document).foundation();
-	})(jQuery);
-</script>
+        <div class="showcase">
+          <div class="showcase-text">
+            <h2>Protected your way</h2>
+            <p>Encrypt your authenticators with your own password, and optionally lock them so they only open on this computer, or only for your Windows account.</p>
+            <p>Individual authenticators can have their own password too, for accounts that need extra care.</p>
+          </div>
+          <div class="stage">
+            <picture>
+              <source srcset="images/screenshots/protection-dark.png" media="(prefers-color-scheme: dark)">
+              <img src="images/screenshots/protection.png" width="521" height="557" alt="The Protection dialog with password and Windows account options" loading="lazy">
+            </picture>
+          </div>
+        </div>
+
+        <div class="showcase reverse">
+          <div class="showcase-text">
+            <h2>Type codes from any program</h2>
+            <p>Give an authenticator a shortcut key such as Ctrl+Alt+G. Press it while signing in and DeskAuth types the code for you, copies it, or shows it in a notification.</p>
+          </div>
+          <div class="stage">
+            <picture>
+              <source srcset="images/screenshots/hotkey-dark.png" media="(prefers-color-scheme: dark)">
+              <img src="images/screenshots/hotkey.png" width="441" height="380" alt="The Shortcut key dialog set to Ctrl+Alt+G" loading="lazy">
+            </picture>
+          </div>
+        </div>
+
+        <div class="showcase">
+          <div class="showcase-text">
+            <h2>Icons that match</h2>
+            <p>Enter a website such as <code>github.com</code> and DeskAuth uses the icon your browser shows for it. You can also use the address of an image, or an image file.</p>
+          </div>
+          <div class="stage">
+            <picture>
+              <source srcset="images/screenshots/icon-dark.png" media="(prefers-color-scheme: dark)">
+              <img src="images/screenshots/icon.png" width="521" height="324" alt="The Choose icon dialog with github.com entered" loading="lazy">
+            </picture>
+          </div>
+        </div>
+
+        <div class="showcase reverse">
+          <div class="showcase-text">
+            <h2>Take your accounts with you</h2>
+            <p>Show an authenticator's secret key and QR code to add it to your phone or another computer, or export all of them to a file of <code>otpauth://</code> links that other authenticator apps can import.</p>
+          </div>
+          <div class="stage">
+            <picture>
+              <source srcset="images/screenshots/secret-dark.png" media="(prefers-color-scheme: dark)">
+              <img src="images/screenshots/secret.png" width="481" height="576" alt="The secret key dialog showing a QR code, the key and the otpauth link" loading="lazy">
+            </picture>
+          </div>
+        </div>
+
+        <div class="showcase">
+          <div class="showcase-text">
+            <h2>Stays out of your way</h2>
+            <p>Start with Windows, keep DeskAuth in the system tray, keep it on top of other windows, and let it size itself to fit your authenticators.</p>
+          </div>
+          <div class="stage">
+            <picture>
+              <source srcset="images/screenshots/options-dark.png" media="(prefers-color-scheme: dark)">
+              <img src="images/screenshots/options.png" width="592" height="458" alt="The options menu" loading="lazy">
+            </picture>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <h2>Private by design</h2>
+        <p class="section-intro">DeskAuth has no account, no cloud and no tracking. Your authenticators are stored in a single encrypted file on your computer, and DeskAuth only connects to the internet when you ask it to download an icon. The source code is open for anyone to review.</p>
+        <div class="buttons">
+          <a class="button primary" href="download.html">Download DeskAuth</a>
+          <a class="button" href="help.html">Read the help</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>DeskAuth is based on WinAuth by Colin Mackie, and is modernized by contributors. Free software under the <a href="https://github.com/DeskAuth/deskauth/blob/main/LICENSE">GNU GPL v3</a>.</span>
+      <span><a href="https://github.com/DeskAuth/deskauth">Source code</a> &middot; <a href="https://github.com/DeskAuth/deskauth/issues">Report a problem</a></span>
+    </div>
+  </footer>
 </body>
 </html>

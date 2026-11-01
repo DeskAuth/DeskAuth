@@ -1,0 +1,23 @@
+<Window x:Class="DeskAuth.Views.NotificationPopup"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="DeskAuth"
+        Width="300"
+        SizeToContent="Height"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        ShowActivated="False"
+        Topmost="True"
+        BorderThickness="1"
+        BorderBrush="{DynamicResource SurfaceStrokeColorDefaultBrush}"
+        MouseLeftButtonUp="Window_MouseLeftButtonUp">
+    <DockPanel Margin="16,12">
+        <Image x:Name="IconImage" Width="32" Height="32" DockPanel.Dock="Left" VerticalAlignment="Center" Margin="0,0,12,0" />
+        <StackPanel>
+            <TextBlock x:Name="TitleText" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" />
+            <TextBlock x:Name="MessageText" FontSize="22" FontFamily="Consolas" TextWrapping="Wrap" />
+            <TextBlock x:Name="HintText" Opacity="0.7" FontSize="11" Text="Click to copy" />
+        </StackPanel>
+    </DockPanel>
+</Window>

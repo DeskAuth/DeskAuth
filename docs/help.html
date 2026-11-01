@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Help - DeskAuth</title>
+  <meta name="description" content="Help for DeskAuth: backups, lost passwords, protection, shortcut keys, portable mode and upgrading from WinAuth.">
+  <meta name="color-scheme" content="light dark">
+  <link rel="canonical" href="https://deskauth.com/help.html">
+  <link rel="icon" href="favicon.ico">
+  <link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="index.html"><img src="images/logo-64.png" alt="" width="32" height="32">DeskAuth</a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="index.html">Home</a>
+        <a href="index.html#features">Features</a>
+        <a href="download.html">Download</a>
+        <a href="help.html" aria-current="page">Help</a>
+        <a href="https://github.com/DeskAuth/deskauth">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="container">
+      <h1>Help</h1>
+
+      <nav class="toc" aria-label="Contents">
+        <strong>Contents</strong>
+        <ul>
+          <li><a href="#using">Using DeskAuth</a></li>
+          <li><a href="#protection">Protecting your authenticators</a></li>
+          <li><a href="#backups">Backing up your authenticators</a></li>
+          <li><a href="#lost-password">Lost or forgotten password</a></li>
+          <li><a href="#saved">Where are my authenticators saved?</a></li>
+          <li><a href="#shortcuts">Shortcut keys and the system tray</a></li>
+          <li><a href="#import-export">Import and export</a></li>
+          <li><a href="#upgrading">Upgrading from WinAuth</a></li>
+          <li><a href="#secure">Is it secure?</a></li>
+          <li><a href="#problems">Reporting a problem</a></li>
+        </ul>
+      </nav>
+
+      <h2 id="using">Using DeskAuth</h2>
+      <ul>
+        <li>Click <strong>Add</strong> to add an authenticator from a secret key, an <code>otpauth://</code> link, or a QR code image.</li>
+        <li>Double-click an authenticator, or select it and press Ctrl+C, to copy its code.</li>
+        <li>Authenticators that don't show their code automatically have a refresh button. Click it to show the code for 10 seconds.</li>
+        <li>Right-click an authenticator to rename it, change its icon, set a password, assign a shortcut key, show its secret key, or delete it. Press F2 to rename and Delete to delete.</li>
+        <li>Drag authenticators to change their order.</li>
+        <li>Click the gear button for options, protection, import and export.</li>
+      </ul>
+
+      <h3>Time-based and counter-based codes</h3>
+      <p>Most websites use time-based codes (TOTP), which change every 30 seconds. The ring next to the code shows how long it has left. Some, such as VPN tokens, use counter-based codes (HOTP), which change each time you use one; DeskAuth only shows these when you click.</p>
+      <p>Time-based codes depend on your computer's clock. If codes are rejected, check that Windows is set to set the time automatically.</p>
+
+      <h2 id="protection">Protecting your authenticators</h2>
+      <p>Choose <strong>Change protection</strong> from the gear menu. You can use any combination of:</p>
+      <ul>
+        <li><strong>Your own password.</strong> DeskAuth asks for it each time it starts. This is strongly recommended: without it, any program running as you could read your secret keys.</li>
+        <li><strong>Encrypt so it can only be used on this computer</strong>, and optionally <strong>only by the current Windows user</strong>. This uses Windows' own data protection, so the file can't be opened if it is copied elsewhere.</li>
+      </ul>
+      <p>You can also set a password on individual authenticators from their right-click menu. DeskAuth asks for it each time you show that authenticator's code.</p>
+
+      <h2 id="backups">Backing up your authenticators</h2>
+      <p>If you lose your authenticators you may be locked out of your accounts, so keep a backup. You can:</p>
+      <ul>
+        <li>Save the backup or recovery codes each website gives you when you turn on two-factor authentication. This is the most reliable way to get back into an account.</li>
+        <li>Choose <strong>Export</strong> from the gear menu. This saves a text file of <code>otpauth://</code> links that DeskAuth and most other authenticator apps can import. The file is not encrypted, so keep it somewhere safe, such as an encrypted drive or a password manager.</li>
+        <li>Right-click an authenticator and choose <strong>Show secret key</strong>, then write down the key or scan the QR code with an authenticator app on your phone.</li>
+        <li>Copy your <code>deskauth.xml</code> file. If it is locked to this computer or Windows account, a copy will only open there, so also use one of the other methods.</li>
+      </ul>
+
+      <h2 id="lost-password">Lost or forgotten password</h2>
+      <p>When you protect DeskAuth with a password, or lock it to your computer or Windows account, your authenticators are encrypted with keys made from those. There is no password recovery and no way to decrypt them without the password or the original Windows account. This can happen if you:</p>
+      <ul>
+        <li>forget your password</li>
+        <li>reinstall Windows, or move to a new computer, without removing the "only on this computer" protection first</li>
+      </ul>
+      <p>If this happens, you will need to:</p>
+      <ol>
+        <li>Import a backup you exported, or add authenticators again from secret keys you saved.</li>
+        <li>For any account you can't restore, sign in using the website's backup or recovery codes, or its account recovery process, then turn two-factor authentication off and on again to get a new secret key.</li>
+      </ol>
+
+      <h2 id="saved">Where are my authenticators saved?</h2>
+      <p>In <code>%APPDATA%\DeskAuth\deskauth.xml</code>, usually <code>C:\Users\<em>you</em>\AppData\Roaming\DeskAuth\deskauth.xml</code>. Each time DeskAuth saves, it keeps the previous version as <code>deskauth.xml.bak</code>.</p>
+      <p>DeskAuth uses a different file if:</p>
+      <ul>
+        <li>there is a <code>deskauth.xml</code>, or WinAuth's <code>winauth.xml</code>, in the same folder as <code>DeskAuth.exe</code> (portable mode), or</li>
+        <li>you give a file on the command line: <code>DeskAuth.exe "D:\path\to\deskauth.xml"</code>.</li>
+      </ul>
+      <p>Choose <strong>About</strong> from the gear menu to see which file is in use. The file is never sent anywhere.</p>
+
+      <h2 id="shortcuts">Shortcut keys and the system tray</h2>
+      <p>Right-click an authenticator and choose <strong>Shortcut key</strong> to assign a key combination such as Ctrl+Alt+G. It works from any program, and can type the code into the current window, copy it, or show it in a notification. If another program already uses the combination, DeskAuth tells you so you can choose another.</p>
+      <p>Turn on <strong>Use system tray icon</strong> in the gear menu to keep DeskAuth in the notification area. Closing or minimizing the window then hides it to the tray. Click the tray icon to show DeskAuth, or right-click it to copy any code. <strong>Start with Windows</strong> starts DeskAuth in the tray when you sign in.</p>
+
+      <h2 id="import-export">Import and export</h2>
+      <p>DeskAuth imports and exports text files with one <code>otpauth://</code> link per line, the format used by most authenticator apps, for example:</p>
+      <pre><code>otpauth://totp/GitHub:alice?secret=JBSWY3DPEHPK3PXP&amp;issuer=GitHub
+otpauth://hotp/VPN?secret=GEZDGNBVGY3TQOJQ&amp;counter=12</code></pre>
+      <p>Blank lines and lines starting with <code>#</code> are ignored. Exports from WinAuth 3 can be imported if they were saved as plain text; for encrypted zip or PGP exports, export again from WinAuth 3 as a text file first.</p>
+
+      <h2 id="upgrading">Upgrading from WinAuth</h2>
+      <p>DeskAuth is a rewrite of WinAuth 3 for modern Windows. The first time it runs, it copies your authenticators from WinAuth's <code>%APPDATA%\WinAuth\winauth.xml</code> to <code>%APPDATA%\DeskAuth\deskauth.xml</code>, keeping their protection. Your WinAuth file is not changed, but DeskAuth saves in a stronger format that WinAuth 3 cannot read, so changes in one don't appear in the other.</p>
+      <ul>
+        <li>Only standard time-based and counter-based authenticators are supported. These work with almost every website, including Microsoft, Google and Okta accounts. Battle.net, Steam, Guild Wars 2, Glyph and other service-specific authenticators are shown as not supported. Move them to their official apps, then delete them from DeskAuth.</li>
+        <li>YubiKey protection is no longer supported. Remove it using WinAuth 3 before upgrading.</li>
+        <li>DeskAuth uses your computer's clock and no longer checks the time online.</li>
+        <li>Export saves a plain text file. Encrypted zip and PGP exports, the update checker and the registry backups have been removed.</li>
+        <li>Shortcut keys type, copy or show the code. Advanced shortcut scripts now type the code.</li>
+      </ul>
+
+      <h2 id="secure">Is it secure?</h2>
+      <p>Any authenticator adds a second layer of security to your accounts, but none is perfect. A separate device, such as a phone or a hardware security key, is safer than an app on the computer you sign in from, because malware on that computer can't reach it.</p>
+      <p>DeskAuth keeps your secret keys encrypted on your computer and never sends them anywhere. To keep them safe:</p>
+      <ul>
+        <li>protect DeskAuth with a strong password</li>
+        <li>keep Windows up to date and free of malware</li>
+        <li>only download DeskAuth from the <a href="https://github.com/DeskAuth/deskauth/releases">GitHub releases page</a></li>
+      </ul>
+      <p>DeskAuth is open source, so anyone can review the code or build it themselves.</p>
+
+      <h2 id="problems">Reporting a problem</h2>
+      <p>Please <a href="https://github.com/DeskAuth/deskauth/issues">open an issue on GitHub</a> with what you did, what happened, and your Windows version. Never include your secret keys, passwords or <code>deskauth.xml</code> file.</p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>DeskAuth is based on WinAuth by Colin Mackie, and is modernized by contributors. Free software under the <a href="https://github.com/DeskAuth/deskauth/blob/main/LICENSE">GNU GPL v3</a>.</span>
+      <span><a href="https://github.com/DeskAuth/deskauth">Source code</a> &middot; <a href="https://github.com/DeskAuth/deskauth/issues">Report a problem</a></span>
+    </div>
+  </footer>
+</body>
+</html>

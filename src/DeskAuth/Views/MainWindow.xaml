@@ -1,0 +1,115 @@
+<Window x:Class="DeskAuth.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:DeskAuth.Controls"
+        Title="DeskAuth"
+        Icon="/DeskAuth;component/Resources/deskauth.ico"
+        Width="420"
+        Height="480"
+        MinWidth="300"
+        MinHeight="200">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
+        <FontFamily x:Key="SymbolFont">Segoe Fluent Icons, Segoe MDL2 Assets</FontFamily>
+    </Window.Resources>
+
+    <Grid Margin="12,8,12,12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <ListBox x:Name="AuthenticatorList"
+                 Background="Transparent"
+                 BorderThickness="0"
+                 HorizontalContentAlignment="Stretch"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 ScrollViewer.CanContentScroll="False"
+                 Grid.IsSharedSizeScope="True"
+                 AllowDrop="True"
+                 MouseDoubleClick="AuthenticatorList_MouseDoubleClick"
+                 PreviewMouseLeftButtonDown="AuthenticatorList_PreviewMouseLeftButtonDown"
+                 PreviewMouseMove="AuthenticatorList_PreviewMouseMove"
+                 DragOver="AuthenticatorList_DragOver"
+                 Drop="AuthenticatorList_Drop"
+                 ContextMenuOpening="AuthenticatorList_ContextMenuOpening"
+                 KeyDown="AuthenticatorList_KeyDown">
+            <ListBox.ContextMenu>
+                <ContextMenu />
+            </ListBox.ContextMenu>
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                    <Setter Property="Margin" Value="0" />
+                    <Setter Property="Padding" Value="6,2" />
+                    <Setter Property="MinHeight" Value="0" />
+                </Style>
+            </ListBox.ItemContainerStyle>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Height="36" Background="Transparent" ToolTip="{Binding Status}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <!-- shared so the codes line up in a column -->
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Code" />
+                            <ColumnDefinition Width="32" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- light tile so dark icons (e.g. GitHub's) show up in dark mode -->
+                        <Border Width="28" Height="28" CornerRadius="6" Background="White" VerticalAlignment="Center">
+                            <Image Source="{Binding Icon}" Width="22" Height="22"
+                                   RenderOptions.BitmapScalingMode="HighQuality" />
+                        </Border>
+
+                        <TextBlock Grid.Column="1" Text="{Binding Name}" FontSize="14" VerticalAlignment="Center"
+                                   TextTrimming="CharacterEllipsis" Margin="10,0,12,0" />
+
+                        <TextBlock Grid.Column="2" Text="{Binding Code}" VerticalAlignment="Center" Margin="0,0,10,0">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="FontSize" Value="20" />
+                                    <Setter Property="FontFamily" Value="Consolas" />
+                                    <Setter Property="FontWeight" Value="SemiBold" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsCodeVisible}" Value="False">
+                                            <Setter Property="Opacity" Value="0.45" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsSupported}" Value="False">
+                                            <Setter Property="FontSize" Value="13" />
+                                            <Setter Property="FontFamily" Value="{x:Static SystemFonts.MessageFontFamily}" />
+                                            <Setter Property="FontWeight" Value="Normal" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+
+                        <controls:CountdownRing Grid.Column="3" Width="22" Height="22"
+                                                Value="{Binding Progress}"
+                                                Fill="{DynamicResource AccentFillColorDefaultBrush}"
+                                                Visibility="{Binding ShowProgress, Converter={StaticResource BoolToVisibility}}" />
+                        <Button Grid.Column="3" Width="32" Height="30" Padding="0" MinWidth="0" MinHeight="0"
+                                ToolTip="Show code" AutomationProperties.Name="Show code"
+                                Visibility="{Binding ShowRevealButton, Converter={StaticResource BoolToVisibility}}"
+                                Click="RevealButton_Click">
+                            <TextBlock Text="&#xE72C;" FontFamily="{StaticResource SymbolFont}" FontSize="14" />
+                        </Button>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <TextBlock x:Name="EmptyText" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" Margin="24"
+                   Opacity="0.8" Text="Click Add to set up your first authenticator." />
+
+        <DockPanel Grid.Row="1" Margin="0,8,0,0">
+            <Button x:Name="AddButton" Content="Add" MinWidth="100" Click="AddButton_Click"
+                    Style="{DynamicResource AccentButtonStyle}" />
+            <Button x:Name="OptionsButton" DockPanel.Dock="Right" HorizontalAlignment="Right"
+                    ToolTip="Options" AutomationProperties.Name="Options" Click="OptionsButton_Click">
+                <!-- glyph font on the TextBlock, so the options menu doesn't inherit it -->
+                <TextBlock Text="&#xE713;" FontFamily="{StaticResource SymbolFont}" FontSize="16" />
+            </Button>
+        </DockPanel>
+    </Grid>
+</Window>
