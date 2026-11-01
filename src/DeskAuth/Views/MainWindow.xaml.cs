@@ -1,4 +1,6 @@
-// DeskAuth, based on WinAuth. Copyright (C) 2011 Colin Mackie and contributors.
+// DeskAuth, based on WinAuth.
+// Copyright (C) 2010-2017 Colin Mackie (WinAuth).
+// Copyright (C) 2026 Nick Morphis and contributors (DeskAuth, modified from WinAuth).
 // Licensed under the GNU General Public License v3 or later. See LICENSE.
 
 using System.Collections.ObjectModel;
@@ -664,8 +666,10 @@ public partial class MainWindow : Window
         MessageBox.Show(this,
             $"DeskAuth {version?.ToString(3)}\n\n" +
             "Authenticator for Windows.\n\n" +
-            "Copyright (C) 2011 Colin Mackie and contributors.\n" +
-            "Distributed under the GNU General Public License v3.\n\n" +
+            "Copyright (C) 2026 Nick Morphis and contributors.\n" +
+            "Based on WinAuth, Copyright (C) 2010-2017 Colin Mackie.\n\n" +
+            "This program is free software, distributed under the GNU General Public License v3 or later. " +
+            "It comes with ABSOLUTELY NO WARRANTY. See the license for details.\n\n" +
             "https://github.com/DeskAuth/DeskAuth\n\n" +
             "Config file:\n" + _config.FilePath,
             "About DeskAuth", MessageBoxButton.OK, MessageBoxImage.Information);

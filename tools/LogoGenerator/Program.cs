@@ -1,10 +1,12 @@
+// DeskAuth, based on WinAuth.
+// Copyright (C) 2010-2017 Colin Mackie (WinAuth).
+// Copyright (C) 2026 Nick Morphis and contributors (DeskAuth, modified from WinAuth).
+// Licensed under the GNU General Public License v3 or later. See LICENSE.
+
 using System.IO;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-
-// DeskAuth, based on WinAuth. Copyright (C) 2011 Colin Mackie and contributors.
-// Licensed under the GNU General Public License v3 or later. See LICENSE.
 
 // Draws the DeskAuth logo as vector shapes and renders it at every icon size.
 //

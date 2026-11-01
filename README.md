@@ -88,7 +88,9 @@ DeskAuth does not send your information anywhere. The only time it connects to t
 
 ## Author
 
-DeskAuth is based on WinAuth, written by Colin Mackie. Copyright (C) 2010-2017 Colin Mackie. Modernized as DeskAuth by contributors.
+DeskAuth is maintained by Nick Morphis and contributors. Copyright (C) 2026 Nick Morphis and contributors.
+
+DeskAuth is based on [WinAuth](https://github.com/winauth/winauth), written by Colin Mackie. Copyright (C) 2010-2017 Colin Mackie. DeskAuth modified WinAuth in 2026, rewriting it for .NET 10 and WPF.
 
 ## License
 
