@@ -666,7 +666,7 @@ public partial class MainWindow : Window
             "Authenticator for Windows.\n\n" +
             "Copyright (C) 2011 Colin Mackie and contributors.\n" +
             "Distributed under the GNU General Public License v3.\n\n" +
-            "https://github.com/DeskAuth/deskauth\n\n" +
+            "https://github.com/DeskAuth/DeskAuth\n\n" +
             "Config file:\n" + _config.FilePath,
             "About DeskAuth", MessageBoxButton.OK, MessageBoxImage.Information);
     }

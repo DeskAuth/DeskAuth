@@ -4,7 +4,7 @@ DeskAuth is a portable, open-source authenticator for Windows. It generates the 
 
 DeskAuth is based on [WinAuth](https://github.com/winauth/winauth) by Colin Mackie, modernized and rewritten for .NET 10 and WPF.
 
-**[deskauth.com](https://deskauth.com/)** · **[Download](https://github.com/DeskAuth/deskauth/releases)** · **[Help](https://deskauth.com/help.html)**
+**[deskauth.com](https://deskauth.com/)** · **[Download](https://github.com/DeskAuth/DeskAuth/releases)** · **[Help](https://deskauth.com/help.html)**
 
 <p align="center">
 <picture>
