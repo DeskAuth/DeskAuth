@@ -52,6 +52,22 @@ When the files are uploaded, the **Website version** workflow (`.github/workflow
 
 If the release workflow fails, fix the problem, move the tag if needed, and run the **Release** workflow by hand from the Actions tab with the release's tag. It replaces any files already attached.
 
+### Code signing
+
+Releases are signed by [SignPath](https://signpath.io) under the [code signing policy](https://deskauth.com/code-signing.html). Signing is off until it is set up in the repository's **Settings → Secrets and variables → Actions**:
+
+| Name | Kind | Value |
+|---|---|---|
+| `SIGNPATH_API_TOKEN` | Secret | API token of a SignPath user with the submitter role |
+| `SIGNPATH_ORGANIZATION_ID` | Variable | SignPath organization ID. Setting this turns signing on. |
+| `SIGNPATH_PROJECT_SLUG` | Variable | SignPath project slug, for example `DeskAuth` |
+| `SIGNPATH_SIGNING_POLICY_SLUG` | Variable | `test-signing` to try it out, then `release-signing` |
+| `SIGNPATH_ARTIFACT_CONFIGURATION_SLUG` | Variable | Optional; SignPath's default artifact configuration is used if empty |
+
+The artifact configuration to paste into SignPath is in `.signpath/artifact-configuration.xml`. With signing on, the release workflow waits up to 3 hours for an approver to approve the signing request in SignPath, then attaches the signed files and their checksums to the release.
+
+Version, product name and copyright for all projects are in `Directory.Build.props`. Release builds take the version from the tag.
+
 ## Testing
 
 `dotnet test` covers the code generation (RFC 4226 and RFC 6238 test vectors), encryption, reading WinAuth 3 files, and `otpauth://` links.

@@ -104,23 +104,35 @@ public partial class MainWindow : Window
         RegisterHotKeys(showErrors: false);
         _timer.Start();
         _ = ReportUsageAsync();
-        _ = CheckForUpdatesAsync();
+        if (!PrivacyChoicesPending)
+        {
+            // on first use, nothing is checked until the user has seen the privacy choices
+            _ = CheckForUpdatesAsync();
+        }
     }
+
+    /// <summary>
+    /// The user hasn't yet seen the privacy choices: checking for updates and usage statistics
+    /// </summary>
+    private bool PrivacyChoicesPending =>
+        UsageStatistics.IsAvailable && _config.SendUsageStatistics == null && !_config.IsReadOnly;
 
     protected override void OnContentRendered(EventArgs e)
     {
         base.OnContentRendered(e);
 
-        // ask about usage statistics the first time the window is shown
-        if (UsageStatistics.IsAvailable && _config.SendUsageStatistics == null && !_config.IsReadOnly)
+        // ask for the privacy choices the first time the window is shown
+        if (PrivacyChoicesPending)
         {
             Dispatcher.BeginInvoke(() =>
             {
-                var dialog = new UsageStatisticsDialog { Owner = this };
-                // closing the dialog without choosing asks again next time
+                var dialog = new UsageStatisticsDialog(_config.CheckForUpdates) { Owner = this };
+                // closing the dialog without choosing asks again next time, and checks nothing meanwhile
                 if (dialog.ShowDialog() == true)
                 {
+                    _config.CheckForUpdates = dialog.CheckForUpdates;
                     SetUsageStatistics(dialog.Send);
+                    _ = CheckForUpdatesAsync();
                 }
             });
         }
@@ -655,22 +667,20 @@ public partial class MainWindow : Window
             ApplySettings();
             Save();
         }));
-        if (!_config.IsReadOnly)
+        // available even when the file is read only, so checking can always be turned off
+        menu.Items.Add(CheckItem("Check for updates", _config.CheckForUpdates, () =>
         {
-            menu.Items.Add(CheckItem("Check for updates", _config.CheckForUpdates, () =>
+            _config.CheckForUpdates = !_config.CheckForUpdates;
+            Save();
+            if (_config.CheckForUpdates)
             {
-                _config.CheckForUpdates = !_config.CheckForUpdates;
-                Save();
-                if (_config.CheckForUpdates)
-                {
-                    _ = CheckForUpdatesAsync();
-                }
-                else
-                {
-                    UpdateBanner.Visibility = Visibility.Collapsed;
-                }
-            }));
-        }
+                _ = CheckForUpdatesAsync();
+            }
+            else
+            {
+                UpdateBanner.Visibility = Visibility.Collapsed;
+            }
+        }));
         if (UsageStatistics.IsAvailable && !_config.IsReadOnly)
         {
             menu.Items.Add(CheckItem("Send anonymous usage statistics", _config.SendUsageStatistics == true,

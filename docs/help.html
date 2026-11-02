@@ -121,6 +121,17 @@ otpauth://hotp/VPN?secret=GEZDGNBVGY3TQOJQ&amp;counter=12</code></pre>
       <h2 id="updates">Updating DeskAuth</h2>
       <p>When DeskAuth starts, it checks for a new version and shows a message at the top of its window if there is one. Beta versions are never offered. Click <strong>Download the new version</strong>, download the file for your PC, and replace your existing <code>DeskAuth.exe</code> with it. Your authenticators and settings are kept, because they are stored separately. To stop checking, untick <strong>Check for updates</strong> in the options menu (the gear button).</p>
 
+      <h2 id="removing">Removing DeskAuth</h2>
+      <p>DeskAuth has no installer, so there is nothing to uninstall. To remove it completely:</p>
+      <ol>
+        <li>If you might need your authenticators again, use <strong>Export</strong> and keep the file somewhere safe, and make sure each website has another way for you to sign in. <strong>Once deleted, your authenticators cannot be recovered.</strong></li>
+        <li>In the gear menu, untick <strong>Start with Windows</strong>. This removes DeskAuth from the list of programs Windows starts when you sign in.</li>
+        <li>Choose <strong>Exit</strong> from the gear menu.</li>
+        <li>Delete <code>DeskAuth.exe</code>.</li>
+        <li>Delete the <code>%APPDATA%\DeskAuth</code> folder, which holds your authenticators and settings, including the random ID used for usage statistics. In portable mode, delete the <code>deskauth.xml</code> file next to <code>DeskAuth.exe</code> instead.</li>
+      </ol>
+      <p>DeskAuth doesn't change anything else on your computer. WinAuth's files, if you had WinAuth, are never changed.</p>
+
       <h2 id="secure">Is it secure?</h2>
       <p>Any authenticator adds a second layer of security to your accounts, but none is perfect. A separate device, such as a phone or a hardware security key, is safer than an app on the computer you sign in from, because malware on that computer can't reach it.</p>
       <p>DeskAuth keeps your secret keys encrypted on your computer and never sends them anywhere. To keep them safe:</p>
@@ -134,13 +145,15 @@ otpauth://hotp/VPN?secret=GEZDGNBVGY3TQOJQ&amp;counter=12</code></pre>
 
       <h2 id="problems">Reporting a problem</h2>
       <p>Please <a href="https://github.com/DeskAuth/DeskAuth/issues">open an issue on GitHub</a> with what you did, what happened, and your Windows version. Never include your secret keys, passwords or <code>deskauth.xml</code> file.</p>
+      <p>If you don't use GitHub, email <a href="mailto:contact@deskauth.com">contact@deskauth.com</a>.</p>
+      <p><strong>Security problems:</strong> please don't report them in a public issue. Email <a href="mailto:security@deskauth.com">security@deskauth.com</a> instead, as described in the <a href="https://github.com/DeskAuth/DeskAuth/blob/main/SECURITY.md">security policy</a>.</p>
     </div>
   </main>
 
   <footer class="site-footer">
     <div class="container">
       <span>Copyright &copy; 2026 Nick Morphis and contributors. Based on WinAuth, &copy; 2010-2017 Colin Mackie. Free software under the <a href="https://github.com/DeskAuth/DeskAuth/blob/main/LICENSE">GNU GPL v3</a>.</span>
-      <span class="footer-links"><a href="https://github.com/DeskAuth/DeskAuth">Source code</a><a href="https://github.com/DeskAuth/DeskAuth/issues">Report a problem</a><a href="privacy.html">Privacy</a><a href="privacy.html#choices" data-cookie-settings>Cookie settings</a></span>
+      <span class="footer-links"><a href="https://github.com/DeskAuth/DeskAuth">Source code</a><a href="https://github.com/DeskAuth/DeskAuth/issues">Report a problem</a><a href="mailto:contact@deskauth.com">Contact</a><a href="privacy.html">Privacy</a><a href="code-signing.html">Code signing policy</a><a href="privacy.html#choices" data-cookie-settings>Cookie settings</a></span>
     </div>
   </footer>
 </body>

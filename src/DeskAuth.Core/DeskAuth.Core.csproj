@@ -4,6 +4,8 @@
     <TargetFramework>net10.0-windows</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <AssemblyTitle>DeskAuth Core</AssemblyTitle>
+    <Description>Authenticators, encryption and the config file format for DeskAuth</Description>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,0 +1,18 @@
+<Project>
+
+  <!--
+    Shared by every project, so all DeskAuth files carry the same product name and version.
+    SignPath checks these when signing releases. Release builds override the version with the
+    release's tag (see .github/workflows/release.yml).
+  -->
+  <PropertyGroup>
+    <Version>4.2.0</Version>
+    <Product>DeskAuth</Product>
+    <Authors>Nick Morphis and contributors</Authors>
+    <Company>DeskAuth</Company>
+    <Copyright>Copyright (C) 2010-2017 Colin Mackie (WinAuth). Copyright (C) 2026 Nick Morphis and contributors (DeskAuth). GPL v3 or later.</Copyright>
+    <!-- product version is exactly the release version (4.2.0, not 4.2.0+commit), so SignPath can check it -->
+    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+  </PropertyGroup>
+
+</Project>

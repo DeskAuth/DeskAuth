@@ -8,11 +8,9 @@
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Resources\deskauth.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <Version>4.2.0</Version>
-    <Product>DeskAuth</Product>
+    <!-- shown as the file description in Windows; version, product and copyright are in Directory.Build.props -->
+    <AssemblyTitle>DeskAuth</AssemblyTitle>
     <Description>Authenticator for Windows</Description>
-    <Authors>Nick Morphis and contributors</Authors>
-    <Copyright>Copyright (C) 2010-2017 Colin Mackie (WinAuth). Copyright (C) 2026 Nick Morphis and contributors (DeskAuth). GPL v3 or later.</Copyright>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  SignPath artifact configuration for DeskAuth releases. SignPath keeps its own copy: paste this into
+  the project's artifact configuration in SignPath, and keep the two the same.
+
+  The release workflow uploads the release's exe files as one GitHub artifact (a zip file), and passes
+  the release version as the "version" parameter. Each exe must say it is DeskAuth, at that version,
+  before it is signed.
+-->
+<artifact-configuration xmlns="http://signpath.io/artifact-configuration/v1">
+  <parameters>
+    <parameter name="version" required="true" />
+  </parameters>
+  <zip-file>
+    <pe-file-set>
+      <include path="DeskAuth-*.exe" min-matches="4" max-matches="unbounded"
+               product-name="DeskAuth" product-version="${version}" />
+      <for-each>
+        <authenticode-sign />
+      </for-each>
+    </pe-file-set>
+  </zip-file>
+</artifact-configuration>

@@ -86,6 +86,16 @@ An authenticator on your computer is not as secure as a separate device such as 
 
 DeskAuth never sends your authenticators, codes, secret keys or passwords anywhere. It connects to the internet only when you use **Get icon** to download an icon from a website you enter, when it starts to check GitHub for a newer release (you can turn this off in the options menu), and, if you agree when it first opens, to send anonymous usage statistics once a day: a random install ID, the DeskAuth version, and the Windows version and processor type. See the [privacy notice](https://deskauth.com/privacy.html).
 
+To report a security problem, email **security@deskauth.com** rather than opening a public issue. See the [security policy](SECURITY.md).
+
+## Code signing policy
+
+Free code signing provided by [SignPath.io](https://signpath.io), certificate by [SignPath Foundation](https://signpath.org). Releases are built from this repository by GitHub Actions, and each is approved before signing. See the [code signing policy](https://deskauth.com/code-signing.html) for what is signed, the team roles and privacy.
+
+## Removing DeskAuth
+
+There is nothing to uninstall. Untick **Start with Windows** in the gear menu, exit DeskAuth, then delete `DeskAuth.exe` and the `%APPDATA%\DeskAuth` folder. Export your authenticators first if you might need them: once deleted, they cannot be recovered. See [removing DeskAuth](https://deskauth.com/help.html#removing).
+
 ## Donate
 
 DeskAuth is free and open source. If it's useful to you, donations are welcome. Send only the currency shown, on the network shown; QR codes are on the [donate page](https://deskauth.com/donate.html).
@@ -100,7 +110,7 @@ DeskAuth is free and open source. If it's useful to you, donations are welcome. 
 
 ## Author
 
-DeskAuth is maintained by Nick Morphis and contributors. Copyright (C) 2026 Nick Morphis and contributors.
+DeskAuth is maintained by Nick Morphis and contributors. Copyright (C) 2026 Nick Morphis and contributors. Contact: contact@deskauth.com.
 
 DeskAuth is based on [WinAuth](https://github.com/winauth/winauth), written by Colin Mackie. Copyright (C) 2010-2017 Colin Mackie. DeskAuth modified WinAuth in 2026, rewriting it for .NET 10 and WPF.
 
