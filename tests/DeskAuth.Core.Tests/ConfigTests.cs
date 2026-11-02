@@ -17,8 +17,6 @@ public class ConfigTests
     [Theory]
     [InlineData("legacy-plain.xml", null, ProtectionTypes.None)]
     [InlineData("legacy-password.xml", "configpass", ProtectionTypes.Password)]
-    [InlineData("legacy-user.xml", null, ProtectionTypes.User)]
-    [InlineData("legacy-password-user.xml", "configpass", ProtectionTypes.Password | ProtectionTypes.User)]
     public void LoadsLegacyConfigs(string file, string? password, ProtectionTypes protection)
     {
         var config = DeskAuthConfig.Load(Fixtures.PathOf(file), password);
@@ -27,13 +25,27 @@ public class ConfigTests
         AssertFixtureContents(config);
     }
 
+    [UserFixtureTheory]
+    [InlineData("legacy-user.xml", null, ProtectionTypes.User)]
+    [InlineData("legacy-password-user.xml", "configpass", ProtectionTypes.Password | ProtectionTypes.User)]
+    public void LoadsLegacyUserConfigs(string file, string? password, ProtectionTypes protection)
+    {
+        LoadsLegacyConfigs(file, password, protection);
+    }
+
     [Theory]
     [InlineData("legacy-password.xml")]
-    [InlineData("legacy-password-user.xml")]
     public void LegacyPasswordRequired(string file)
     {
         Assert.Throws<PasswordRequiredException>(() => DeskAuthConfig.Load(Fixtures.PathOf(file)));
         Assert.Throws<BadPasswordException>(() => DeskAuthConfig.Load(Fixtures.PathOf(file), "wrong"));
+    }
+
+    [UserFixtureTheory]
+    [InlineData("legacy-password-user.xml")]
+    public void LegacyUserPasswordRequired(string file)
+    {
+        LegacyPasswordRequired(file);
     }
 
     [Theory]
