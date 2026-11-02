@@ -6,7 +6,7 @@
     release's tag (see .github/workflows/release.yml).
   -->
   <PropertyGroup>
-    <Version>4.2.0</Version>
+    <Version>4.3.0</Version>
     <Product>DeskAuth</Product>
     <Authors>Nick Morphis and contributors</Authors>
     <Company>DeskAuth</Company>
