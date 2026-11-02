@@ -1,0 +1,96 @@
+name: Release
+
+# Runs when a release is published on GitHub. The release's tag gives the version (v4.1.0 or 4.1.0),
+# which is built into the exe. The workflow tests, builds the downloads described on
+# deskauth.com/download.html, and attaches them and a SHA256SUMS.txt file to the release.
+#
+# To rebuild an existing release, run this workflow by hand from the Actions tab and enter its tag.
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Tag of the existing release to build and upload to, for example v4.1.0
+        required: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.event.release.tag_name || inputs.tag }}
+
+jobs:
+  release:
+    runs-on: windows-latest
+    env:
+      DOTNET_NOLOGO: true
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+      TAG: ${{ github.event.release.tag_name || inputs.tag }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: refs/tags/${{ env.TAG }}
+
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Get version from tag
+        id: version
+        shell: pwsh
+        run: |
+          $version = $env:TAG -replace '^[vV]', ''
+          if ($version -notmatch '^\d+\.\d+\.\d+(-[0-9A-Za-z.-]+)?$') {
+            throw "The tag '$env:TAG' is not a version such as v4.1.0 or v4.1.0-beta.1"
+          }
+          "version=$version" >> $env:GITHUB_OUTPUT
+
+      - name: Test
+        run: dotnet test -c Release
+
+      - name: Publish
+        shell: pwsh
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          New-Item -ItemType Directory -Force release | Out-Null
+
+          $builds = @(
+            @{ Rid = 'win-x64';   SelfContained = 'false'; Name = "DeskAuth-$env:VERSION-x64.exe" },
+            @{ Rid = 'win-arm64'; SelfContained = 'false'; Name = "DeskAuth-$env:VERSION-arm64.exe" },
+            @{ Rid = 'win-x86';   SelfContained = 'false'; Name = "DeskAuth-$env:VERSION-x86.exe" },
+            @{ Rid = 'win-x64';   SelfContained = 'true';  Name = "DeskAuth-$env:VERSION-x64-standalone.exe" }
+          )
+
+          foreach ($build in $builds) {
+            $out = "publish/" + [IO.Path]::GetFileNameWithoutExtension($build.Name)
+            dotnet publish src/DeskAuth -c Release -r $build.Rid `
+              --self-contained $build.SelfContained `
+              -p:PublishSingleFile=true `
+              -p:IncludeNativeLibrariesForSelfExtract=true `
+              -p:EnableCompressionInSingleFile=$($build.SelfContained) `
+              -p:DebugType=none `
+              -p:Version=$env:VERSION `
+              -o $out
+            if ($LASTEXITCODE -ne 0) { throw "dotnet publish failed for $($build.Name)" }
+
+            $files = Get-ChildItem $out -File
+            if ($files.Count -ne 1 -or $files[0].Name -ne 'DeskAuth.exe') {
+              throw "Expected only DeskAuth.exe in $out, found: $($files.Name -join ', ')"
+            }
+            Copy-Item $files[0].FullName "release/$($build.Name)"
+          }
+
+          Get-ChildItem release -File | Sort-Object Name | ForEach-Object {
+            "$((Get-FileHash $_.FullName -Algorithm SHA256).Hash.ToLower())  $($_.Name)"
+          } | Set-Content release/SHA256SUMS.txt -Encoding ascii
+
+          Get-Content release/SHA256SUMS.txt
+
+      - name: Upload to the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload "$env:TAG" (Get-ChildItem release -File).FullName --clobber

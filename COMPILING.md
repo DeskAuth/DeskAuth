@@ -36,7 +36,19 @@ To create a single `DeskAuth.exe` that needs the .NET 10 Desktop Runtime install
 dotnet publish src/DeskAuth -c Release -r win-x64 --self-contained false -p:PublishSingleFile=true -o publish
 ```
 
-For a larger exe that runs without .NET installed, use `--self-contained true`. Use `-r win-arm64` for ARM devices.
+For a larger exe that runs without .NET installed, use `--self-contained true`. Use `-r win-arm64` for ARM devices, or `-r win-x86` for 32-bit Windows.
+
+## Releases
+
+GitHub Actions builds and tests every push and pull request to `main` (`.github/workflows/build.yml`).
+
+To make a release, create a new release on GitHub with a tag such as `v4.1.0`, and publish it. The release workflow (`.github/workflows/release.yml`) then runs the tests and attaches these files to the release, with the version taken from the tag:
+
+* `DeskAuth-4.1.0-x64.exe`, `DeskAuth-4.1.0-arm64.exe` and `DeskAuth-4.1.0-x86.exe`, which need the .NET 10 Desktop Runtime
+* `DeskAuth-4.1.0-x64-standalone.exe`, which includes .NET
+* `SHA256SUMS.txt`
+
+If the workflow fails, fix the problem, move the tag if needed, and run the **Release** workflow by hand from the Actions tab with the release's tag. It replaces any files already attached.
 
 ## Testing
 
