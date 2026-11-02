@@ -157,6 +157,32 @@ public class ConfigTests
     }
 
     [Fact]
+    public void UsageStatisticsChoiceRoundTrips()
+    {
+        var config = DeskAuthConfig.Load(Fixtures.PathOf("legacy-plain.xml"));
+        Assert.Null(config.SendUsageStatistics);
+        Assert.Null(config.InstallId);
+
+        var id = Guid.NewGuid();
+        var reported = new DateTimeOffset(2026, 11, 1, 18, 30, 0, TimeSpan.Zero);
+        config.SendUsageStatistics = true;
+        config.InstallId = id;
+        config.LastUsageReport = reported;
+        config.SetProtection(ProtectionTypes.Password, "pass");
+
+        var reloaded = DeskAuthConfig.Parse(config.Serialize(), "pass");
+        Assert.True(reloaded.SendUsageStatistics);
+        Assert.Equal(id, reloaded.InstallId);
+        Assert.Equal(reported, reloaded.LastUsageReport);
+
+        reloaded.SendUsageStatistics = false;
+        reloaded.InstallId = null;
+        var declined = DeskAuthConfig.Parse(reloaded.Serialize(), "pass");
+        Assert.False(declined.SendUsageStatistics);
+        Assert.Null(declined.InstallId);
+    }
+
+    [Fact]
     public void RejectsYubiKeyProtection()
     {
         string xml = "<WinAuth version=\"3.6\"><data encrypted=\"a\">00</data></WinAuth>";

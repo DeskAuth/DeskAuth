@@ -102,6 +102,26 @@ public partial class MainWindow : Window
         _hotKeys.HotKeyPressed += (_, entry) => _ = HandleHotKeyAsync(entry);
         RegisterHotKeys(showErrors: false);
         _timer.Start();
+        _ = ReportUsageAsync();
+    }
+
+    protected override void OnContentRendered(EventArgs e)
+    {
+        base.OnContentRendered(e);
+
+        // ask about usage statistics the first time the window is shown
+        if (UsageStatistics.IsAvailable && _config.SendUsageStatistics == null && !_config.IsReadOnly)
+        {
+            Dispatcher.BeginInvoke(() =>
+            {
+                var dialog = new UsageStatisticsDialog { Owner = this };
+                // closing the dialog without choosing asks again next time
+                if (dialog.ShowDialog() == true)
+                {
+                    SetUsageStatistics(dialog.Send);
+                }
+            });
+        }
     }
 
     protected override void OnStateChanged(EventArgs e)
@@ -633,6 +653,11 @@ public partial class MainWindow : Window
             ApplySettings();
             Save();
         }));
+        if (UsageStatistics.IsAvailable && !_config.IsReadOnly)
+        {
+            menu.Items.Add(CheckItem("Send anonymous usage statistics", _config.SendUsageStatistics == true,
+                () => SetUsageStatistics(_config.SendUsageStatistics != true)));
+        }
         menu.Items.Add(new Separator());
         if (!_config.IsReadOnly)
         {
@@ -643,6 +668,24 @@ public partial class MainWindow : Window
         menu.Items.Add(MenuItem("About", ShowAbout));
         menu.Items.Add(MenuItem("Exit", Exit));
         menu.IsOpen = true;
+    }
+
+    private void SetUsageStatistics(bool send)
+    {
+        UsageStatistics.SetChoice(_config, send);
+        Save();
+        _ = ReportUsageAsync();
+    }
+
+    /// <summary>
+    /// Send the daily usage report, if the user agreed
+    /// </summary>
+    private async Task ReportUsageAsync()
+    {
+        if (await UsageStatistics.ReportIfDueAsync(_config))
+        {
+            Save();
+        }
     }
 
     private void ChangeProtection(bool askCurrentPassword)

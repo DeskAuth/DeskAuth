@@ -57,6 +57,22 @@ public sealed class DeskAuthConfig
     public int Height { get; set; }
 
     /// <summary>
+    /// The user agreed to send anonymous usage statistics; null until they have been asked
+    /// </summary>
+    public bool? SendUsageStatistics { get; set; }
+
+    /// <summary>
+    /// Random ID sent with usage statistics, so repeat use from one copy of DeskAuth counts as one user.
+    /// Created when the user agrees and discarded when they stop.
+    /// </summary>
+    public Guid? InstallId { get; set; }
+
+    /// <summary>
+    /// When usage statistics were last sent
+    /// </summary>
+    public DateTimeOffset? LastUsageReport { get; set; }
+
+    /// <summary>
     /// Protection on the whole file
     /// </summary>
     public ProtectionTypes Protection { get; private set; }
@@ -195,6 +211,21 @@ public sealed class DeskAuthConfig
                 case "height":
                     Height = (int)child;
                     break;
+                case "usagestatistics":
+                    SendUsageStatistics = (bool)child;
+                    break;
+                case "installid":
+                    if (Guid.TryParse(child.Value, out Guid installId))
+                    {
+                        InstallId = installId;
+                    }
+                    break;
+                case "lastusagereport":
+                    if (DateTimeOffset.TryParse(child.Value, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out DateTimeOffset report))
+                    {
+                        LastUsageReport = report;
+                    }
+                    break;
                 case "WinAuthAuthenticator":
                     Authenticators.Add(AuthenticatorEntry.FromXml(child));
                     break;
@@ -272,6 +303,18 @@ public sealed class DeskAuthConfig
             root.Add(new XElement("left", Left.Value), new XElement("top", Top.Value));
         }
         root.Add(new XElement("width", Width), new XElement("height", Height));
+        if (SendUsageStatistics.HasValue)
+        {
+            root.Add(new XElement("usagestatistics", SendUsageStatistics.Value));
+        }
+        if (InstallId.HasValue)
+        {
+            root.Add(new XElement("installid", InstallId.Value));
+        }
+        if (LastUsageReport.HasValue)
+        {
+            root.Add(new XElement("lastusagereport", LastUsageReport.Value.ToUniversalTime().ToString("o", CultureInfo.InvariantCulture)));
+        }
 
         var authenticators = Authenticators.Select(a => a.ToXml());
         if (Protection == ProtectionTypes.None)

@@ -32,8 +32,23 @@
       <p>This notice explains what the DeskAuth app and the deskauth.com website collect. DeskAuth is an open-source project maintained by Nick Morphis. For questions or requests about your data, <a href="https://github.com/DeskAuth/DeskAuth/issues">open an issue on GitHub</a>.</p>
 
       <h2 id="app">The DeskAuth app</h2>
-      <p>The DeskAuth app collects nothing about you. It has no account, sends no usage statistics, and keeps your authenticators in an encrypted file on your computer.</p>
-      <p>The app only connects to the internet when you use <strong>Get icon</strong>. It then downloads the page or image at the address you entered, directly from that website, which will see a request from your computer.</p>
+      <p>The DeskAuth app has no account and keeps your authenticators in an encrypted file on your computer. It never sends your authenticators, their names, codes or secret keys, your passwords, or anything about the websites you use.</p>
+      <p>The app connects to the internet only:</p>
+      <ul>
+        <li>when you use <strong>Get icon</strong>. It downloads the page or image at the address you entered, directly from that website, which will see a request from your computer.</li>
+        <li>to send anonymous usage statistics, if you agree to it.</li>
+      </ul>
+
+      <h3 id="usage-statistics">Anonymous usage statistics</h3>
+      <p>DeskAuth asks the first time it opens whether you want to send anonymous usage statistics. Nothing is sent unless you choose <strong>Send statistics</strong>; if you close the question without choosing, DeskAuth asks again next time.</p>
+      <p>If you agree, at most once a day when DeskAuth starts, it sends:</p>
+      <ul>
+        <li>a random ID created for your copy of DeskAuth, so that repeat use counts as one user. It is not linked to you, your computer or your accounts.</li>
+        <li>the DeskAuth version</li>
+        <li>the Windows version and processor type, for example Windows 11 on an x64 processor</li>
+      </ul>
+      <p>We use these only to count how many people install and use DeskAuth, and which versions of DeskAuth and Windows to support. They are collected with Google Analytics, in a separate property from the website, with advertising features turned off. As with the website, Google receives your IP address with each report but does not store it, and the data is kept for 2 months.</p>
+      <p>To stop, untick <strong>Send anonymous usage statistics</strong> in DeskAuth's options menu (the gear button). DeskAuth then stops sending and deletes its random ID, so if you agree again later you are counted as a new user. Your choice and the random ID are stored in your DeskAuth file.</p>
 
       <h2 id="website">The deskauth.com website</h2>
 

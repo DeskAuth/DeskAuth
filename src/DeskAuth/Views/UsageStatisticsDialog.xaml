@@ -1,0 +1,36 @@
+<Window x:Class="DeskAuth.Views.UsageStatisticsDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Help improve DeskAuth"
+        Width="500"
+        SizeToContent="Height"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        WindowStartupLocation="CenterOwner">
+    <StackPanel Margin="20">
+        <TextBlock TextWrapping="Wrap" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,12"
+                   Text="Send anonymous usage statistics?" />
+        <TextBlock TextWrapping="Wrap" Margin="0,0,0,12"
+                   Text="They tell us how many people use DeskAuth, and which versions of DeskAuth and Windows to keep supporting." />
+
+        <TextBlock Text="If you agree, once a day when DeskAuth starts it sends:" FontWeight="SemiBold" Margin="0,0,0,4" />
+        <TextBlock TextWrapping="Wrap" Margin="12,0,0,12">
+            • a random ID created for this copy of DeskAuth<LineBreak />
+            • the DeskAuth version<LineBreak />
+            • the Windows version and processor type
+        </TextBlock>
+
+        <TextBlock TextWrapping="Wrap" Margin="0,0,0,12"
+                   Text="It never sends your authenticators, their names, codes or secret keys, your passwords, or anything about the websites you use. The statistics are collected with Google Analytics." />
+
+        <TextBlock TextWrapping="Wrap" Opacity="0.8">
+            You can change this at any time from the options menu.
+            <Hyperlink NavigateUri="https://deskauth.com/privacy.html" RequestNavigate="PrivacyLink_RequestNavigate">Privacy notice</Hyperlink>
+        </TextBlock>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+            <Button Content="Send statistics" MinWidth="120" Click="SendButton_Click" />
+            <Button Content="Don't send" MinWidth="120" Margin="8,0,0,0" Click="DontSendButton_Click" />
+        </StackPanel>
+    </StackPanel>
+</Window>

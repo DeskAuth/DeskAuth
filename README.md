@@ -84,7 +84,7 @@ See [COMPILING.md](COMPILING.md).
 
 An authenticator on your computer is not as secure as a separate device such as a phone or hardware key: anything that can read your files and watch you type your password could read your secret keys. Protect DeskAuth with a password, keep your computer free of malware, and keep a backup of your secret keys somewhere safe.
 
-DeskAuth does not send your information anywhere. The only time it connects to the internet is when you use **Get icon** to download an icon from a website you enter. See the [privacy notice](https://deskauth.com/privacy.html).
+DeskAuth never sends your authenticators, codes, secret keys or passwords anywhere. It connects to the internet only when you use **Get icon** to download an icon from a website you enter, and, if you agree when it first opens, to send anonymous usage statistics once a day: a random install ID, the DeskAuth version, and the Windows version and processor type. See the [privacy notice](https://deskauth.com/privacy.html).
 
 ## Author
 
