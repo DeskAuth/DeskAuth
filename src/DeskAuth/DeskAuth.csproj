@@ -8,7 +8,7 @@
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Resources\deskauth.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <Version>4.1.0</Version>
+    <Version>4.2.0</Version>
     <Product>DeskAuth</Product>
     <Description>Authenticator for Windows</Description>
     <Authors>Nick Morphis and contributors</Authors>
