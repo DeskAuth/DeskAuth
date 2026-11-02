@@ -461,3 +461,53 @@ h3 {
   min-width: 0;
   max-width: 100%;
 }
+
+/* cookie consent banner, added by js/analytics.js */
+
+.consent {
+  position: fixed;
+  z-index: 20;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  max-width: 760px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 20px;
+  padding: 16px 20px;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+
+.consent[hidden] {
+  display: none;
+}
+
+.consent-text {
+  flex: 1 1 360px;
+  margin: 0;
+  font-size: 15px;
+}
+
+.consent-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.consent .button {
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  min-width: 96px;
+}
+
+.footer-links a + a::before {
+  content: "·";
+  margin: 0 8px;
+  color: var(--text-muted);
+}
