@@ -511,3 +511,60 @@ h3 {
   margin: 0 8px;
   color: var(--text-muted);
 }
+
+/* donate page */
+
+.donate-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+  margin: 24px 0 8px;
+}
+
+.donate-card {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  text-align: center;
+}
+
+.donate-card h2 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.donate-card .ticker {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.donate-card .network {
+  margin: -6px 0 0;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.donate-card img {
+  border-radius: 8px;
+}
+
+.donate-card .address {
+  display: block;
+  max-width: 100%;
+  word-break: break-all;
+  font-size: 14px;
+  user-select: all;
+}
+
+.donate-card .button {
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}

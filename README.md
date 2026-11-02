@@ -4,7 +4,7 @@ DeskAuth is a portable, open-source authenticator for Windows. It generates the 
 
 DeskAuth is based on [WinAuth](https://github.com/winauth/winauth) by Colin Mackie, modernized and rewritten for .NET 10 and WPF.
 
-**[deskauth.com](https://deskauth.com/)** · **[Download](https://github.com/DeskAuth/DeskAuth/releases)** · **[Help](https://deskauth.com/help.html)**
+**[deskauth.com](https://deskauth.com/)** · **[Download](https://github.com/DeskAuth/DeskAuth/releases)** · **[Help](https://deskauth.com/help.html)** · **[Donate](https://deskauth.com/donate.html)**
 
 <p align="center">
 <picture>
@@ -85,6 +85,18 @@ See [COMPILING.md](COMPILING.md).
 An authenticator on your computer is not as secure as a separate device such as a phone or hardware key: anything that can read your files and watch you type your password could read your secret keys. Protect DeskAuth with a password, keep your computer free of malware, and keep a backup of your secret keys somewhere safe.
 
 DeskAuth never sends your authenticators, codes, secret keys or passwords anywhere. It connects to the internet only when you use **Get icon** to download an icon from a website you enter, and, if you agree when it first opens, to send anonymous usage statistics once a day: a random install ID, the DeskAuth version, and the Windows version and processor type. See the [privacy notice](https://deskauth.com/privacy.html).
+
+## Donate
+
+DeskAuth is free and open source. If it's useful to you, donations are welcome. Send only the currency shown, on the network shown; QR codes are on the [donate page](https://deskauth.com/donate.html).
+
+| Currency | Address |
+|---|---|
+| Bitcoin (BTC) | `34AbSsvYt3J2yDngpUqkDqFAgUyqi4B96c` |
+| Ethereum (ETH) | `0x8516c860546e73a05449EE403560CCE83e490275` |
+| Litecoin (LTC) | `MMnVCoc5ZVBa1ng8a584uECS5tzZbC6guo` |
+| Dogecoin (DOGE) | `DF8j85GGQk5h138FkRZn4Y8vckNHwYqrbv` |
+| Shiba Inu (SHIB, ERC-20 on Ethereum) | `0x9CE95b4b826Dc0Af4823ec3625f641d074FA477F` |
 
 ## Author
 
