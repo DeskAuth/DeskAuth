@@ -79,7 +79,7 @@ internal static class UsageStatistics
                     name = "app_start",
                     @params = new Dictionary<string, object>
                     {
-                        ["app_version"] = typeof(UsageStatistics).Assembly.GetName().Version?.ToString(3) ?? "unknown",
+                        ["app_version"] = AppInfo.VersionText,
                         ["os_version"] = Environment.OSVersion.Version.ToString(),
                         ["architecture"] = RuntimeInformation.OSArchitecture.ToString(),
                         ["session_id"] = now.ToUnixTimeSeconds().ToString(),

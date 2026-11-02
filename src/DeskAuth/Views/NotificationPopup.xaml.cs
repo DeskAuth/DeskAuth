@@ -4,6 +4,7 @@
 // Licensed under the GNU General Public License v3 or later. See LICENSE.
 
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -12,15 +13,16 @@ using DeskAuth.Services;
 namespace DeskAuth.Views;
 
 /// <summary>
-/// Small window above the notification area, used to show a code without opening DeskAuth
+/// Small window above the notification area, used to show a code or a message without opening DeskAuth
 /// </summary>
 public partial class NotificationPopup : Window
 {
     private static NotificationPopup? _current;
 
     private readonly string? _copyText;
+    private readonly Action? _onClick;
 
-    private NotificationPopup(string title, string message, ImageSource? icon, string? copyText)
+    private NotificationPopup(string title, string message, ImageSource? icon, string? copyText, Action? onClick = null, string? hint = null)
     {
         InitializeComponent();
         TitleText.Text = title;
@@ -28,7 +30,19 @@ public partial class NotificationPopup : Window
         IconImage.Source = icon;
         IconImage.Visibility = icon == null ? Visibility.Collapsed : Visibility.Visible;
         _copyText = copyText;
-        HintText.Visibility = copyText == null ? Visibility.Collapsed : Visibility.Visible;
+        _onClick = onClick;
+        if (onClick != null)
+        {
+            // a message in the normal font, rather than a code
+            MessageText.ClearValue(TextBlock.FontSizeProperty);
+            MessageText.ClearValue(TextBlock.FontFamilyProperty);
+            MessageText.Margin = new Thickness(0, 4, 0, 4);
+        }
+        if (hint != null)
+        {
+            HintText.Text = hint;
+        }
+        HintText.Visibility = copyText == null && hint == null ? Visibility.Collapsed : Visibility.Visible;
 
         var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(10) };
         timer.Tick += (_, _) => Close();
@@ -40,10 +54,20 @@ public partial class NotificationPopup : Window
     /// Show a notification, replacing any already showing
     /// </summary>
     /// <param name="copyText">text copied to the clipboard when clicked</param>
-    public static void Show(string title, string message, ImageSource? icon = null, string? copyText = null)
+    public static void Show(string title, string message, ImageSource? icon = null, string? copyText = null) =>
+        Show(new NotificationPopup(title, message, icon, copyText));
+
+    /// <summary>
+    /// Show a message, replacing any notification already showing
+    /// </summary>
+    /// <param name="hint">what clicking does</param>
+    /// <param name="onClick">run when the message is clicked</param>
+    public static void ShowMessage(string title, string message, string hint, Action onClick) =>
+        Show(new NotificationPopup(title, message, null, null, onClick, hint));
+
+    private static void Show(NotificationPopup popup)
     {
         _current?.Close();
-        var popup = new NotificationPopup(title, message, icon, copyText);
         popup.Loaded += (_, _) =>
         {
             Rect area = SystemParameters.WorkArea;
@@ -69,5 +93,6 @@ public partial class NotificationPopup : Window
             SystemIntegration.CopyToClipboard(_copyText);
         }
         Close();
+        _onClick?.Invoke();
     }
 }

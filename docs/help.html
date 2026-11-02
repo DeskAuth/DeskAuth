@@ -114,9 +114,12 @@ otpauth://hotp/VPN?secret=GEZDGNBVGY3TQOJQ&amp;counter=12</code></pre>
         <li>Only standard time-based and counter-based authenticators are supported. These work with almost every website, including Microsoft, Google and Okta accounts. Battle.net, Steam, Guild Wars 2, Glyph and other service-specific authenticators are shown as not supported. Move them to their official apps, then delete them from DeskAuth.</li>
         <li>YubiKey protection is no longer supported. Remove it using WinAuth 3 before upgrading.</li>
         <li>DeskAuth uses your computer's clock and no longer checks the time online.</li>
-        <li>Export saves a plain text file. Encrypted zip and PGP exports, the update checker and the registry backups have been removed.</li>
+        <li>Export saves a plain text file. Encrypted zip and PGP exports and the registry backups have been removed.</li>
         <li>Shortcut keys type, copy or show the code. Advanced shortcut scripts now type the code.</li>
       </ul>
+
+      <h2 id="updates">Updating DeskAuth</h2>
+      <p>When DeskAuth starts, it checks for a new version and shows a message at the top of its window if there is one. Beta versions are never offered. Click <strong>Download the new version</strong>, download the file for your PC, and replace your existing <code>DeskAuth.exe</code> with it. Your authenticators and settings are kept, because they are stored separately. To stop checking, untick <strong>Check for updates</strong> in the options menu (the gear button).</p>
 
       <h2 id="secure">Is it secure?</h2>
       <p>Any authenticator adds a second layer of security to your accounts, but none is perfect. A separate device, such as a phone or a hardware security key, is safer than an app on the computer you sign in from, because malware on that computer can't reach it.</p>

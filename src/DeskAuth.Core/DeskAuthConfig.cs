@@ -48,6 +48,11 @@ public sealed class DeskAuthConfig
     /// </summary>
     public bool AutoSize { get; set; } = true;
 
+    /// <summary>
+    /// Look for a newer release when DeskAuth starts
+    /// </summary>
+    public bool CheckForUpdates { get; set; } = true;
+
     public int? Left { get; set; }
 
     public int? Top { get; set; }
@@ -199,6 +204,9 @@ public sealed class DeskAuthConfig
                 case "autosize":
                     AutoSize = (bool)child;
                     break;
+                case "checkforupdates":
+                    CheckForUpdates = (bool)child;
+                    break;
                 case "left":
                     Left = (int)child;
                     break;
@@ -297,7 +305,8 @@ public sealed class DeskAuthConfig
             new XElement("alwaysontop", AlwaysOnTop),
             new XElement("usetrayicon", UseTrayIcon),
             new XElement("startwithwindows", StartWithWindows),
-            new XElement("autosize", AutoSize));
+            new XElement("autosize", AutoSize),
+            new XElement("checkforupdates", CheckForUpdates));
         if (Left.HasValue && Top.HasValue)
         {
             root.Add(new XElement("left", Left.Value), new XElement("top", Top.Value));

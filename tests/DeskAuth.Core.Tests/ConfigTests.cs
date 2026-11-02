@@ -195,6 +195,22 @@ public class ConfigTests
     }
 
     [Fact]
+    public void CheckForUpdatesIsOnByDefaultAndRoundTrips()
+    {
+        // WinAuth files don't have the setting
+        var config = DeskAuthConfig.Load(Fixtures.PathOf("legacy-plain.xml"));
+        Assert.True(config.CheckForUpdates);
+        Assert.True(new DeskAuthConfig().CheckForUpdates);
+
+        config.CheckForUpdates = false;
+        var reloaded = DeskAuthConfig.Parse(config.Serialize());
+        Assert.False(reloaded.CheckForUpdates);
+
+        reloaded.CheckForUpdates = true;
+        Assert.True(DeskAuthConfig.Parse(reloaded.Serialize()).CheckForUpdates);
+    }
+
+    [Fact]
     public void RejectsYubiKeyProtection()
     {
         string xml = "<WinAuth version=\"3.6\"><data encrypted=\"a\">00</data></WinAuth>";

@@ -33,6 +33,7 @@ public partial class MainWindow : Window
     private readonly TrayIcon _tray = new();
     private HotKeyManager? _hotKeys;
     private bool _exiting;
+    private UpdateCheck.Release? _update;
 
     // drag to reorder
     private Point _dragStart;
@@ -103,6 +104,7 @@ public partial class MainWindow : Window
         RegisterHotKeys(showErrors: false);
         _timer.Start();
         _ = ReportUsageAsync();
+        _ = CheckForUpdatesAsync();
     }
 
     protected override void OnContentRendered(EventArgs e)
@@ -653,6 +655,22 @@ public partial class MainWindow : Window
             ApplySettings();
             Save();
         }));
+        if (!_config.IsReadOnly)
+        {
+            menu.Items.Add(CheckItem("Check for updates", _config.CheckForUpdates, () =>
+            {
+                _config.CheckForUpdates = !_config.CheckForUpdates;
+                Save();
+                if (_config.CheckForUpdates)
+                {
+                    _ = CheckForUpdatesAsync();
+                }
+                else
+                {
+                    UpdateBanner.Visibility = Visibility.Collapsed;
+                }
+            }));
+        }
         if (UsageStatistics.IsAvailable && !_config.IsReadOnly)
         {
             menu.Items.Add(CheckItem("Send anonymous usage statistics", _config.SendUsageStatistics == true,
@@ -688,6 +706,57 @@ public partial class MainWindow : Window
         }
     }
 
+    /// <summary>
+    /// Tell the user if there is a newer published release. Pre-releases are never offered.
+    /// </summary>
+    private async Task CheckForUpdatesAsync()
+    {
+        if (!_config.CheckForUpdates)
+        {
+            return;
+        }
+        UpdateCheck.Release? release = await UpdateChecker.FindNewerReleaseAsync();
+        // the user may have turned checking off while waiting
+        if (release == null || !_config.CheckForUpdates || _exiting)
+        {
+            return;
+        }
+
+        _update = release;
+        string version = release.Version.ToString(3);
+        UpdateText.Text = $"DeskAuth {version} is available. You have version {AppInfo.VersionText}.";
+        UpdateLink.ToolTip = release.Page.AbsoluteUri;
+        UpdateBanner.Visibility = Visibility.Visible;
+
+        if (!IsVisible)
+        {
+            // started in the tray
+            NotificationPopup.ShowMessage("DeskAuth update available", $"DeskAuth {version} is available. You have version {AppInfo.VersionText}.",
+                "Click to open DeskAuth", ShowFromBackground);
+        }
+    }
+
+    private void UpdateLink_Click(object sender, RoutedEventArgs e)
+    {
+        if (_update == null)
+        {
+            return;
+        }
+        try
+        {
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(_update.Page.AbsoluteUri) { UseShellExecute = true });
+        }
+        catch (System.ComponentModel.Win32Exception ex)
+        {
+            ShowError($"Your web browser could not be opened. Download the new version from {_update.Page.AbsoluteUri}\n\n{ex.Message}");
+        }
+    }
+
+    private void UpdateBannerClose_Click(object sender, RoutedEventArgs e)
+    {
+        UpdateBanner.Visibility = Visibility.Collapsed;
+    }
+
     private void ChangeProtection(bool askCurrentPassword)
     {
         if (askCurrentPassword && _config.Protection.HasFlag(ProtectionTypes.Password)
@@ -705,9 +774,8 @@ public partial class MainWindow : Window
 
     private void ShowAbout()
     {
-        var version = typeof(MainWindow).Assembly.GetName().Version;
         MessageBox.Show(this,
-            $"DeskAuth {version?.ToString(3)}\n\n" +
+            $"DeskAuth {AppInfo.VersionText}\n\n" +
             "Authenticator for Windows.\n\n" +
             "Copyright (C) 2026 Nick Morphis and contributors.\n" +
             "Based on WinAuth, Copyright (C) 2010-2017 Colin Mackie.\n\n" +

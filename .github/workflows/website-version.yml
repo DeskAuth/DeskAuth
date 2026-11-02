@@ -1,0 +1,80 @@
+name: Website version
+
+# Sets the version and download links on deskauth.com (docs/) to the latest published release, commits
+# the change to main, and rebuilds the website. Runs after each release has uploaded its files, and can
+# be run by hand from the Actions tab.
+#
+# GitHub's latest release is never a draft or a pre-release, so beta versions are never shown.
+
+on:
+  workflow_call:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: Branch to update
+        default: main
+
+permissions:
+  contents: write
+  pages: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    # one at a time, so two releases close together don't race to push
+    concurrency:
+      group: website-version
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ inputs.branch || 'main' }}
+
+      - name: Get the latest published release
+        id: latest
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: pwsh
+        run: |
+          $tag = gh release view --repo $env:GITHUB_REPOSITORY --json tagName -q .tagName
+          if ($LASTEXITCODE -ne 0) { throw 'Could not read the latest release' }
+          $version = $tag -replace '^[vV]', ''
+          if ($version -notmatch '^\d+\.\d+\.\d+$') {
+            throw "The latest release's tag '$tag' is not a version such as v4.1.0"
+          }
+          "Latest published release: $tag"
+          "version=$version" >> $env:GITHUB_OUTPUT
+
+      - name: Update the website
+        shell: pwsh
+        run: ./tools/Update-WebsiteVersion.ps1 -Version ${{ steps.latest.outputs.version }}
+
+      - name: Commit and push
+        id: commit
+        env:
+          VERSION: ${{ steps.latest.outputs.version }}
+          BRANCH: ${{ inputs.branch || 'main' }}
+        run: |
+          if git diff --quiet -- docs; then
+            echo "The website already shows DeskAuth $VERSION"
+            echo "pushed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs
+          git commit -m "Show DeskAuth $VERSION on the website"
+          # the branch may have moved on while this ran
+          for attempt in 1 2 3; do
+            git pull --rebase origin "$BRANCH" && git push origin "HEAD:$BRANCH" && break
+            sleep 5
+          done
+          git fetch origin "$BRANCH"
+          git merge-base --is-ancestor HEAD "origin/$BRANCH"
+          echo "pushed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Rebuild the website
+        if: steps.commit.outputs.pushed == 'true' && (inputs.branch || 'main') == 'main'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        # pushes made by workflows don't always start a GitHub Pages build
+        run: gh api -X POST "repos/$GITHUB_REPOSITORY/pages/builds" --jq .status

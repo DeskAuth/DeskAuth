@@ -73,7 +73,7 @@ Changes from WinAuth 3:
 * Only standard TOTP and HOTP authenticators are supported. Battle.net, Steam, Guild Wars 2, Trion/Glyph and other service-specific authenticators have been removed. They are kept in the file and listed as not supported, so you can still delete them; to keep using them, move them to their official apps first.
 * YubiKey protection has been removed. Files protected with a YubiKey must have it removed using WinAuth 3 first.
 * Codes use your computer's clock, which Windows keeps in sync. DeskAuth no longer contacts Google to check the time.
-* Export is to a plain text file of `otpauth://` links. Password-protected zip and PGP exports, the update checker and the registry backups have been removed.
+* Export is to a plain text file of `otpauth://` links. Password-protected zip and PGP exports and the registry backups have been removed.
 * Shortcut keys can type, copy or show the code. Advanced shortcut scripts are no longer supported and fall back to typing the code.
 
 ## Building
@@ -84,7 +84,7 @@ See [COMPILING.md](COMPILING.md).
 
 An authenticator on your computer is not as secure as a separate device such as a phone or hardware key: anything that can read your files and watch you type your password could read your secret keys. Protect DeskAuth with a password, keep your computer free of malware, and keep a backup of your secret keys somewhere safe.
 
-DeskAuth never sends your authenticators, codes, secret keys or passwords anywhere. It connects to the internet only when you use **Get icon** to download an icon from a website you enter, and, if you agree when it first opens, to send anonymous usage statistics once a day: a random install ID, the DeskAuth version, and the Windows version and processor type. See the [privacy notice](https://deskauth.com/privacy.html).
+DeskAuth never sends your authenticators, codes, secret keys or passwords anywhere. It connects to the internet only when you use **Get icon** to download an icon from a website you enter, when it starts to check GitHub for a newer release (you can turn this off in the options menu), and, if you agree when it first opens, to send anonymous usage statistics once a day: a random install ID, the DeskAuth version, and the Windows version and processor type. See the [privacy notice](https://deskauth.com/privacy.html).
 
 ## Donate
 

@@ -202,7 +202,7 @@ internal static class IconDownloader
             Timeout = TimeSpan.FromSeconds(20),
         };
         // some sites refuse requests that don't look like a browser
-        client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (Windows NT 10.0; Win64; x64) DeskAuth/4.0");
+        client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (Windows NT 10.0; Win64; x64) DeskAuth/" + AppInfo.VersionText);
         client.DefaultRequestHeaders.Accept.ParseAdd("text/html,image/png,image/x-icon,image/*;q=0.8,*/*;q=0.5");
         return client;
     }

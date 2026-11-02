@@ -48,7 +48,9 @@ To make a release, create a new release on GitHub with a tag such as `v4.1.0`, a
 * `DeskAuth-4.1.0-x64-standalone.exe`, which includes .NET
 * `SHA256SUMS.txt`
 
-If the workflow fails, fix the problem, move the tag if needed, and run the **Release** workflow by hand from the Actions tab with the release's tag. It replaces any files already attached.
+When the files are uploaded, the **Website version** workflow (`.github/workflows/website-version.yml`) sets the version and download links on the website (`docs/`) to the latest published release, using `tools/Update-WebsiteVersion.ps1`, and pushes the change to `main`. Pre-releases are never shown on the website or offered as an update in the app. The workflow can also be run by hand from the Actions tab.
+
+If the release workflow fails, fix the problem, move the tag if needed, and run the **Release** workflow by hand from the Actions tab with the release's tag. It replaces any files already attached.
 
 ## Testing
 

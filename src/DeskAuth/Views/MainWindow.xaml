@@ -15,11 +15,31 @@
 
     <Grid Margin="12,8,12,12">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <ListBox x:Name="AuthenticatorList"
+        <!-- shown when a newer release is available -->
+        <Border x:Name="UpdateBanner" Visibility="Collapsed" Margin="0,0,0,8" Padding="10,6,4,6" CornerRadius="4"
+                Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+                BorderBrush="{DynamicResource AccentFillColorDefaultBrush}" BorderThickness="1"
+                AutomationProperties.LiveSetting="Polite">
+            <DockPanel>
+                <Button DockPanel.Dock="Right" Width="28" Height="28" Padding="0" MinWidth="0" MinHeight="0"
+                        Background="Transparent" BorderThickness="0" VerticalAlignment="Center"
+                        ToolTip="Hide until DeskAuth restarts" AutomationProperties.Name="Hide update notice"
+                        Click="UpdateBannerClose_Click">
+                    <TextBlock Text="&#xE711;" FontFamily="{StaticResource SymbolFont}" FontSize="10" />
+                </Button>
+                <TextBlock TextWrapping="Wrap" VerticalAlignment="Center">
+                    <Run x:Name="UpdateText" /><LineBreak />
+                    <Hyperlink x:Name="UpdateLink" Click="UpdateLink_Click">Download the new version</Hyperlink>
+                </TextBlock>
+            </DockPanel>
+        </Border>
+
+        <ListBox x:Name="AuthenticatorList" Grid.Row="1"
                  Background="Transparent"
                  BorderThickness="0"
                  HorizontalContentAlignment="Stretch"
@@ -99,10 +119,10 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <TextBlock x:Name="EmptyText" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" Margin="24"
+        <TextBlock x:Name="EmptyText" Grid.Row="1" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" Margin="24"
                    Opacity="0.8" Text="Click Add to set up your first authenticator." />
 
-        <DockPanel Grid.Row="1" Margin="0,8,0,0">
+        <DockPanel Grid.Row="2" Margin="0,8,0,0">
             <Button x:Name="AddButton" Content="Add" MinWidth="100" Click="AddButton_Click"
                     Style="{DynamicResource AccentButtonStyle}" />
             <Button x:Name="OptionsButton" DockPanel.Dock="Right" HorizontalAlignment="Right"
