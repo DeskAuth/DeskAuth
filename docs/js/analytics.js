@@ -1,14 +1,14 @@
 // Analytics and the cookie consent banner for deskauth.com. See privacy.html.
 //
 // - Cloudflare Web Analytics uses no cookies and stores nothing on the visitor's device, so it runs
-//   for every visit once CLOUDFLARE_TOKEN is set (Cloudflare > Analytics & Logs > Web Analytics).
+//   for every visit (token from https://dash.cloudflare.com/?to=/:account/web-analytics > Manage site).
 // - Google Analytics sets cookies, so it only loads after the visitor accepts in the consent banner.
 //   A browser's Global Privacy Control signal counts as declining.
 //
 // Both only run on the public site, so local copies and GitHub previews are not counted.
 (function () {
   var GA_MEASUREMENT_ID = 'G-WQHNE1ETW3';
-  var CLOUDFLARE_TOKEN = '';
+  var CLOUDFLARE_TOKEN = '4f696dc6e5db4cc7a7a4b84a1eaafeb0';
   var SITE_HOST = 'deskauth.com';
   var CONSENT_KEY = 'deskauth-analytics-consent';
 
@@ -47,7 +47,9 @@
 
   function loadCloudflare() {
     if (CLOUDFLARE_TOKEN) {
+      // as in Cloudflare's snippet
       loadScript('https://static.cloudflareinsights.com/beacon.min.js', {
+        type: 'module',
         'data-cf-beacon': JSON.stringify({ token: CLOUDFLARE_TOKEN })
       });
     }
