@@ -29,7 +29,8 @@ public partial class App : Application
         base.OnStartup(e);
         DispatcherUnhandledException += OnUnhandledException;
 
-        bool minimize = e.Args.Any(a => a is "-min" or "--minimize" or "/min");
+        // the Microsoft Store version's startup task can't pass -min
+        bool minimize = e.Args.Any(a => a is "-min" or "--minimize" or "/min") || SystemIntegration.StartedByStartupTask();
         string? file = e.Args.FirstOrDefault(a => !a.StartsWith('-') && !a.StartsWith('/'));
         string path = Path.GetFullPath(file ?? DeskAuthConfig.GetDefaultPath());
 
@@ -53,7 +54,7 @@ public partial class App : Application
             Shutdown();
             return;
         }
-        if (config.StartWithWindows)
+        if (config.StartWithWindows && !AppInfo.IsStoreVersion)
         {
             // keep the startup entry pointing at this program
             SystemIntegration.SetStartWithWindows(true);
@@ -82,7 +83,8 @@ public partial class App : Application
 
     /// <summary>
     /// Load the config, asking for its password if needed. The first time DeskAuth runs, authenticators are
-    /// copied from WinAuth's file if there is one; the WinAuth file is left as it is.
+    /// copied from WinAuth's file if there is one, or for the Microsoft Store version, from the downloaded
+    /// version's file. The file copied from is left as it is.
     /// </summary>
     /// <returns>the config, or null to exit</returns>
     private static DeskAuthConfig? LoadConfig(string path, bool isDefaultFile)
@@ -106,7 +108,7 @@ public partial class App : Application
             }
             catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or DeskAuthException)
             {
-                ShowStartupError($"Your WinAuth authenticators could not be copied to {path}\n\n{ex.Message}");
+                ShowStartupError($"Your authenticators could not be copied from {legacyPath} to {path}\n\n{ex.Message}");
             }
         }
         return config;

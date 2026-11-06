@@ -68,6 +68,32 @@ The artifact configuration to paste into SignPath is in `.signpath/artifact-conf
 
 Version, product name and copyright for all projects are in `Directory.Build.props`. Release builds take the version from the tag.
 
+### Microsoft Store
+
+The Store version is the same app built with `-p:DeskAuthStore=true`, which defines `DESKAUTH_STORE` and targets `net10.0-windows10.0.19041.0` for the Windows Runtime startup task API. When it runs from its package (`PackageIdentity.IsPackaged`), DeskAuth:
+
+* keeps its file in the package's `LocalState` folder, copying the downloaded version's `%APPDATA%\DeskAuth\deskauth.xml` (or WinAuth's file) the first time
+* doesn't check GitHub for updates, as the Store updates it
+* uses the startup task declared in `store/AppxManifest.xml` for **Start with Windows**, as Windows ignores a packaged app's Run registry entry
+
+`tools/Build-StorePackage.ps1` publishes it with .NET included for x64, arm64 and x86, packages each with `store/AppxManifest.xml` and `store/Images`, and bundles them into an `.msixupload` file for Partner Center. The Store signs it. It needs the Windows SDK. `tools/New-StoreImages.ps1` remakes the images and the Store listing logo and screenshots in `store/Listing`.
+
+To try it, turn on Developer Mode (Settings, System, For developers), then run in Windows PowerShell:
+
+```
+tools\Build-StorePackage.ps1 -Version 4.3.0 -Architectures x64 -Install
+```
+
+This registers a test copy named **DeskAuth Authenticator** in the Start menu. Remove it with `Get-AppxPackage DeskAuth.Test | Remove-AppxPackage`.
+
+The release workflow builds the package when these repository variables are set, and attaches it to the workflow run as the `microsoft-store-<tag>` artifact (not to the release). Download it from the run's summary page and upload it in Partner Center.
+
+| Variable | Value, from Partner Center: Product management, Product identity |
+|---|---|
+| `STORE_IDENTITY_NAME` | Package/Identity/Name |
+| `STORE_PUBLISHER` | Package/Identity/Publisher, for example `CN=01234567-89AB-CDEF-0123-456789ABCDEF` |
+| `STORE_PUBLISHER_DISPLAY_NAME` | Package/Properties/PublisherDisplayName |
+
 ## Testing
 
 `dotnet test` covers the code generation (RFC 4226 and RFC 6238 test vectors), encryption, reading WinAuth 3 files, and `otpauth://` links.

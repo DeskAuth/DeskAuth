@@ -11,13 +11,16 @@
         <TextBlock TextWrapping="Wrap" Margin="0,0,0,16"
                    Text="DeskAuth never sends your authenticators, their names, codes or secret keys, your passwords, or anything about the websites you use. Choose whether it may connect to the internet for the following." />
 
-        <TextBlock TextWrapping="Wrap" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,8"
-                   Text="Check for new versions" />
-        <CheckBox x:Name="UpdatesCheckBox" IsChecked="True" Margin="0,0,0,4">
-            <TextBlock TextWrapping="Wrap" Text="Tell me when a new version of DeskAuth is available" />
-        </CheckBox>
-        <TextBlock TextWrapping="Wrap" Margin="0,0,0,16" Opacity="0.8"
-                   Text="Each time DeskAuth starts, it asks GitHub for the latest release. GitHub sees your IP address and the DeskAuth version." />
+        <!-- hidden in the Microsoft Store version, which the Store updates -->
+        <StackPanel x:Name="UpdatesSection">
+            <TextBlock TextWrapping="Wrap" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,8"
+                       Text="Check for new versions" />
+            <CheckBox x:Name="UpdatesCheckBox" IsChecked="True" Margin="0,0,0,4">
+                <TextBlock TextWrapping="Wrap" Text="Tell me when a new version of DeskAuth is available" />
+            </CheckBox>
+            <TextBlock TextWrapping="Wrap" Margin="0,0,0,16" Opacity="0.8"
+                       Text="Each time DeskAuth starts, it asks GitHub for the latest release. GitHub sees your IP address and the DeskAuth version." />
+        </StackPanel>
 
         <TextBlock TextWrapping="Wrap" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,8"
                    Text="Send anonymous usage statistics?" />

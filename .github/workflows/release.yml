@@ -151,6 +151,45 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: gh release upload "$env:TAG" (Get-ChildItem release -File).FullName --clobber
 
+  # The Microsoft Store package, to upload in Partner Center. Off until the repository variable
+  # STORE_IDENTITY_NAME is set; see COMPILING.md. It runs separately, so a problem with it never holds up
+  # the downloads.
+  store:
+    if: vars.STORE_IDENTITY_NAME != ''
+    runs-on: windows-latest
+    env:
+      DOTNET_NOLOGO: true
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+      TAG: ${{ github.event.release.tag_name || inputs.tag }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: refs/tags/${{ env.TAG }}
+
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Build the Store package
+        shell: pwsh
+        env:
+          STORE_IDENTITY_NAME: ${{ vars.STORE_IDENTITY_NAME }}
+          STORE_PUBLISHER: ${{ vars.STORE_PUBLISHER }}
+          STORE_PUBLISHER_DISPLAY_NAME: ${{ vars.STORE_PUBLISHER_DISPLAY_NAME }}
+        run: |
+          tools/Build-StorePackage.ps1 -Version $env:TAG `
+            -IdentityName $env:STORE_IDENTITY_NAME `
+            -Publisher $env:STORE_PUBLISHER `
+            -PublisherDisplayName $env:STORE_PUBLISHER_DISPLAY_NAME
+
+      # Not attached to the release: the Store signs the package, so it can't be installed from here
+      - uses: actions/upload-artifact@v4
+        with:
+          name: microsoft-store-${{ env.TAG }}
+          path: store-package/*.msixupload
+          if-no-files-found: error
+          compression-level: 0
+
   # point the website at the latest published release, now its files are uploaded
   website:
     needs: release

@@ -354,10 +354,17 @@ public sealed class DeskAuthConfig
 
     /// <summary>
     /// Default config location: deskauth.xml (or WinAuth's winauth.xml) next to the program if it exists, which is
-    /// portable mode, otherwise %APPDATA%\DeskAuth\deskauth.xml
+    /// portable mode, otherwise %APPDATA%\DeskAuth\deskauth.xml.
+    ///
+    /// The Microsoft Store version keeps its file in its package's own folder instead, because Windows redirects a
+    /// packaged app's new files in %APPDATA% to a hidden copy.
     /// </summary>
     public static string GetDefaultPath()
     {
+        if (PackageIdentity.LocalStateFolder is string packageFolder)
+        {
+            return Path.Combine(packageFolder, DefaultFileName);
+        }
         foreach (string name in new[] { DefaultFileName, LegacyFileName })
         {
             string portable = Path.Combine(AppContext.BaseDirectory, name);
@@ -366,15 +373,26 @@ public sealed class DeskAuthConfig
                 return portable;
             }
         }
-        return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "DeskAuth", DefaultFileName);
+        return StandardPath;
     }
 
     /// <summary>
-    /// WinAuth's file in %APPDATA%\WinAuth, used to copy authenticators to DeskAuth the first time it runs
+    /// %APPDATA%\DeskAuth\deskauth.xml, used by the downloaded (not Store) version
     /// </summary>
-    /// <returns>the path, or null if there is no WinAuth file</returns>
+    private static string StandardPath =>
+        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "DeskAuth", DefaultFileName);
+
+    /// <summary>
+    /// A file to copy authenticators from the first time DeskAuth runs: WinAuth's file in %APPDATA%\WinAuth, and for
+    /// the Microsoft Store version, the downloaded version's file in %APPDATA%\DeskAuth first
+    /// </summary>
+    /// <returns>the path, or null if there is no file to copy</returns>
     public static string? FindLegacyFile()
     {
+        if (PackageIdentity.IsPackaged && File.Exists(StandardPath))
+        {
+            return StandardPath;
+        }
         string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "WinAuth", LegacyFileName);
         return File.Exists(path) ? path : null;
     }

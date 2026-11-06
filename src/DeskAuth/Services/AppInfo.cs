@@ -18,4 +18,9 @@ internal static class AppInfo
         UpdateCheck.Normalize(typeof(AppInfo).Assembly.GetName().Version ?? new Version(0, 0, 0));
 
     public static string VersionText { get; } = Version.ToString(3);
+
+    /// <summary>
+    /// Installed from the Microsoft Store: the Store updates it, and Windows runs it at startup
+    /// </summary>
+    public static bool IsStoreVersion => PackageIdentity.IsPackaged;
 }

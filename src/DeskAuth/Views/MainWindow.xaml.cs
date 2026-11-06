@@ -35,6 +35,11 @@ public partial class MainWindow : Window
     private bool _exiting;
     private UpdateCheck.Release? _update;
 
+    /// <summary>
+    /// The Microsoft Store version's startup task is on
+    /// </summary>
+    private bool _startupTaskEnabled;
+
     // drag to reorder
     private Point _dragStart;
     private AuthenticatorItem? _dragItem;
@@ -103,6 +108,10 @@ public partial class MainWindow : Window
         _hotKeys.HotKeyPressed += (_, entry) => _ = HandleHotKeyAsync(entry);
         RegisterHotKeys(showErrors: false);
         _timer.Start();
+        if (AppInfo.IsStoreVersion)
+        {
+            _ = RefreshStartupTaskAsync();
+        }
         _ = ReportUsageAsync();
         if (!PrivacyChoicesPending)
         {
@@ -643,12 +652,19 @@ public partial class MainWindow : Window
             menu.Items.Add(MenuItem("Change protection...", () => ChangeProtection(askCurrentPassword: true)));
             menu.Items.Add(new Separator());
         }
-        menu.Items.Add(CheckItem("Start with Windows", _config.StartWithWindows, () =>
+        if (AppInfo.IsStoreVersion)
         {
-            _config.StartWithWindows = !_config.StartWithWindows;
-            SystemIntegration.SetStartWithWindows(_config.StartWithWindows);
-            Save();
-        }));
+            menu.Items.Add(CheckItem("Start with Windows", _startupTaskEnabled, () => _ = ToggleStartupTaskAsync()));
+        }
+        else
+        {
+            menu.Items.Add(CheckItem("Start with Windows", _config.StartWithWindows, () =>
+            {
+                _config.StartWithWindows = !_config.StartWithWindows;
+                SystemIntegration.SetStartWithWindows(_config.StartWithWindows);
+                Save();
+            }));
+        }
         menu.Items.Add(CheckItem("Always on top", _config.AlwaysOnTop, () =>
         {
             _config.AlwaysOnTop = !_config.AlwaysOnTop;
@@ -667,20 +683,24 @@ public partial class MainWindow : Window
             ApplySettings();
             Save();
         }));
-        // available even when the file is read only, so checking can always be turned off
-        menu.Items.Add(CheckItem("Check for updates", _config.CheckForUpdates, () =>
+        // available even when the file is read only, so checking can always be turned off. The Microsoft Store
+        // updates the Store version.
+        if (!AppInfo.IsStoreVersion)
         {
-            _config.CheckForUpdates = !_config.CheckForUpdates;
-            Save();
-            if (_config.CheckForUpdates)
+            menu.Items.Add(CheckItem("Check for updates", _config.CheckForUpdates, () =>
             {
-                _ = CheckForUpdatesAsync();
-            }
-            else
-            {
-                UpdateBanner.Visibility = Visibility.Collapsed;
-            }
-        }));
+                _config.CheckForUpdates = !_config.CheckForUpdates;
+                Save();
+                if (_config.CheckForUpdates)
+                {
+                    _ = CheckForUpdatesAsync();
+                }
+                else
+                {
+                    UpdateBanner.Visibility = Visibility.Collapsed;
+                }
+            }));
+        }
         if (UsageStatistics.IsAvailable && !_config.IsReadOnly)
         {
             menu.Items.Add(CheckItem("Send anonymous usage statistics", _config.SendUsageStatistics == true,
@@ -696,6 +716,25 @@ public partial class MainWindow : Window
         menu.Items.Add(MenuItem("About", ShowAbout));
         menu.Items.Add(MenuItem("Exit", Exit));
         menu.IsOpen = true;
+    }
+
+    /// <summary>
+    /// Read whether the Microsoft Store version's startup task is on; it can also be changed in Windows' settings
+    /// </summary>
+    private async Task RefreshStartupTaskAsync()
+    {
+        _startupTaskEnabled = await SystemIntegration.IsStartupTaskEnabledAsync();
+    }
+
+    private async Task ToggleStartupTaskAsync()
+    {
+        await RefreshStartupTaskAsync();
+        string? problem = await SystemIntegration.SetStartupTaskAsync(!_startupTaskEnabled);
+        await RefreshStartupTaskAsync();
+        if (problem != null)
+        {
+            MessageBox.Show(this, problem, "DeskAuth", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
     }
 
     private void SetUsageStatistics(bool send)
@@ -721,7 +760,7 @@ public partial class MainWindow : Window
     /// </summary>
     private async Task CheckForUpdatesAsync()
     {
-        if (!_config.CheckForUpdates)
+        if (!_config.CheckForUpdates || AppInfo.IsStoreVersion)
         {
             return;
         }
@@ -785,7 +824,7 @@ public partial class MainWindow : Window
     private void ShowAbout()
     {
         MessageBox.Show(this,
-            $"DeskAuth {AppInfo.VersionText}\n\n" +
+            $"DeskAuth {AppInfo.VersionText}{(AppInfo.IsStoreVersion ? " (Microsoft Store)" : "")}\n\n" +
             "Authenticator for Windows.\n\n" +
             "Copyright (C) 2026 Nick Morphis and contributors.\n" +
             "Based on WinAuth, Copyright (C) 2010-2017 Colin Mackie.\n\n" +

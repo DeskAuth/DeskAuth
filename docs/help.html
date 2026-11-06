@@ -97,6 +97,7 @@
         <li>you give a file on the command line: <code>DeskAuth.exe "D:\path\to\deskauth.xml"</code>.</li>
       </ul>
       <p>Choose <strong>About</strong> from the gear menu to see which file is in use. The file is never sent anywhere.</p>
+      <p>The <a href="#store">Microsoft Store version</a> keeps its file in its own app folder instead.</p>
 
       <h2 id="shortcuts">Shortcut keys and the system tray</h2>
       <p>Right-click an authenticator and choose <strong>Shortcut key</strong> to assign a key combination such as Ctrl+Alt+G. It works from any program, and can type the code into the current window, copy it, or show it in a notification. If another program already uses the combination, DeskAuth tells you so you can choose another.</p>
@@ -118,8 +119,19 @@ otpauth://hotp/VPN?secret=GEZDGNBVGY3TQOJQ&amp;counter=12</code></pre>
         <li>Shortcut keys type, copy or show the code. Advanced shortcut scripts now type the code.</li>
       </ul>
 
+      <h2 id="store">The Microsoft Store version</h2>
+      <p>DeskAuth is also available from the Microsoft Store. It is the same program, with these differences:</p>
+      <ul>
+        <li>The Store installs it and keeps it up to date, so it doesn't check GitHub for new versions.</li>
+        <li>It keeps your authenticators in its own app folder, <code>%LOCALAPPDATA%\Packages\<em>DeskAuth&#8230;</em>\LocalState\deskauth.xml</code>. Choose <strong>About</strong> from the gear menu to see the exact location.</li>
+        <li>The first time it runs, it copies your authenticators from the downloaded version's <code>%APPDATA%\DeskAuth\deskauth.xml</code>, or if there isn't one, from WinAuth. The file it copies from is not changed, so after that, changes in one version don't appear in the other. If you switch to the Store version, untick <strong>Start with Windows</strong> in the downloaded version and stop using it.</li>
+        <li><strong>Uninstalling the Store version deletes its authenticators.</strong> Use <strong>Export</strong> first if you might need them again.</li>
+        <li><strong>Start with Windows</strong> can also be changed in Windows' Settings, under Apps, Startup.</li>
+      </ul>
+
       <h2 id="updates">Updating DeskAuth</h2>
       <p>When DeskAuth starts, it checks for a new version and shows a message at the top of its window if there is one. Beta versions are never offered. Click <strong>Download the new version</strong>, download the file for your PC, and replace your existing <code>DeskAuth.exe</code> with it. Your authenticators and settings are kept, because they are stored separately. To stop checking, untick <strong>Check for updates</strong> in the options menu (the gear button).</p>
+      <p>The Microsoft Store updates the <a href="#store">Store version</a> itself.</p>
 
       <h2 id="removing">Removing DeskAuth</h2>
       <p>DeskAuth has no installer, so there is nothing to uninstall. To remove it completely:</p>
@@ -131,6 +143,7 @@ otpauth://hotp/VPN?secret=GEZDGNBVGY3TQOJQ&amp;counter=12</code></pre>
         <li>Delete the <code>%APPDATA%\DeskAuth</code> folder, which holds your authenticators and settings, including the random ID used for usage statistics. In portable mode, delete the <code>deskauth.xml</code> file next to <code>DeskAuth.exe</code> instead.</li>
       </ol>
       <p>DeskAuth doesn't change anything else on your computer. WinAuth's files, if you had WinAuth, are never changed.</p>
+      <p>To remove the <a href="#store">Microsoft Store version</a>, export your authenticators if you might need them again, then uninstall it from the Start menu or Windows' Settings, under Apps. Uninstalling deletes its authenticators and settings.</p>
 
       <h2 id="secure">Is it secure?</h2>
       <p>Any authenticator adds a second layer of security to your accounts, but none is perfect. A separate device, such as a phone or a hardware security key, is safer than an app on the computer you sign in from, because malware on that computer can't reach it.</p>

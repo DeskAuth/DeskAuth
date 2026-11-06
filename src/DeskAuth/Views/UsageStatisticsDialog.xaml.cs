@@ -6,6 +6,7 @@
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Navigation;
+using DeskAuth.Services;
 
 namespace DeskAuth.Views;
 
@@ -19,6 +20,11 @@ public partial class UsageStatisticsDialog : Window
     {
         InitializeComponent();
         UpdatesCheckBox.IsChecked = checkForUpdates;
+        if (AppInfo.IsStoreVersion)
+        {
+            // the Microsoft Store updates it
+            UpdatesSection.Visibility = Visibility.Collapsed;
+        }
     }
 
     /// <summary>

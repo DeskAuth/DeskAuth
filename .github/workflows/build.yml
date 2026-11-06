@@ -32,3 +32,7 @@ jobs:
 
       - name: Test
         run: dotnet test -c Release --no-build
+
+      # the Microsoft Store version has its own code (see tools/Build-StorePackage.ps1)
+      - name: Build the Store version
+        run: dotnet build src/DeskAuth -c Release -p:DeskAuthStore=true
