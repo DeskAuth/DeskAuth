@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Code signing policy - DeskAuth</title>
-  <meta name="description" content="How DeskAuth releases are built and signed, and who can approve signing.">
+  <title>Code signing - DeskAuth</title>
+  <meta name="description" content="DeskAuth downloads are not code signed. How they are built, and how to check a download.">
   <meta name="color-scheme" content="light dark">
   <link rel="canonical" href="https://deskauth.com/code-signing.html">
   <link rel="icon" href="favicon.ico">
@@ -28,44 +28,32 @@
 
   <main class="page">
     <div class="container">
-      <h1>Code signing policy</h1>
-      <p>Free code signing provided by <a href="https://signpath.io">SignPath.io</a>, certificate by <a href="https://signpath.org">SignPath Foundation</a>.</p>
+      <h1>Code signing</h1>
+      <p><strong>The DeskAuth downloads are not code signed.</strong> A code signing certificate costs money every year, and DeskAuth is a free project. This is why Windows SmartScreen may warn you the first time you run a downloaded file, and why <strong>Digital Signatures</strong> doesn't appear in the file's properties.</p>
 
-      <h2 id="what">What is signed</h2>
-      <p>The DeskAuth program files (<code>DeskAuth-<em>version</em>-*.exe</code>) attached to each release on the <a href="https://github.com/DeskAuth/DeskAuth/releases">GitHub releases page</a> are signed. They are:</p>
-      <ul>
-        <li>built by GitHub Actions, on GitHub's own servers, from the public source code in the <a href="https://github.com/DeskAuth/DeskAuth">DeskAuth repository</a> at the release's tag, using the <a href="https://github.com/DeskAuth/DeskAuth/blob/main/.github/workflows/release.yml">release workflow</a></li>
-        <li>checked by SignPath to have come from that build before they are signed</li>
-        <li>signed only after an approver from the team below has approved that release</li>
-      </ul>
-      <p>To check a file, right-click it, choose <strong>Properties</strong>, and open <strong>Digital Signatures</strong>. The signer should be <strong>SignPath Foundation</strong>. Files from anywhere else, or that have been changed, are not covered by this policy.</p>
-      <p>Signed releases include third-party open-source components that are not signed by us: <a href="https://github.com/micjahn/ZXing.Net">ZXing.Net</a> (Apache License 2.0) for QR codes, and, in the standalone download, the <a href="https://github.com/dotnet/runtime">.NET runtime</a> (MIT License), which is signed by Microsoft.</p>
+      <h2 id="check">How to check a download</h2>
+      <p>Without a signature, you can still check that a file is the one we published:</p>
+      <ol>
+        <li>Download it only from the <a href="https://github.com/DeskAuth/DeskAuth/releases">GitHub releases page</a> or the <a href="download.html">download page</a>, which links there.</li>
+        <li>In PowerShell, run <code>Get-FileHash DeskAuth-<em>version</em>-x64.exe</code>, using the name of the file you downloaded.</li>
+        <li>Compare the result with that file's line in <code>SHA256SUMS.txt</code>, attached to the same release. Upper or lower case doesn't matter. If they are different, don't run the file.</li>
+      </ol>
 
-      <h2 id="team">Team roles</h2>
-      <ul>
-        <li><strong>Committers and reviewers:</strong> <a href="https://github.com/CowboyNick">Nick Morphis</a>. Committers can change the source code. Every change from anyone else, such as a pull request, is reviewed by a reviewer before it is merged.</li>
-        <li><strong>Approvers:</strong> <a href="https://github.com/CowboyNick">Nick Morphis</a>. An approver approves each release before it is signed.</li>
-      </ul>
-      <p>All team members use multi-factor authentication for GitHub and SignPath. The current list of people with write access is on <a href="https://github.com/DeskAuth/DeskAuth">GitHub</a>.</p>
+      <h2 id="built">How the downloads are built</h2>
+      <p>Each download is built by GitHub Actions, on GitHub's own servers, from the public source code in the <a href="https://github.com/DeskAuth/DeskAuth">DeskAuth repository</a> at the release's tag, using the <a href="https://github.com/DeskAuth/DeskAuth/blob/main/.github/workflows/release.yml">release workflow</a>. You can read the code, see the build for each release on the <a href="https://github.com/DeskAuth/DeskAuth/actions">Actions page</a>, or <a href="https://github.com/DeskAuth/DeskAuth/blob/main/COMPILING.md">build DeskAuth yourself</a>.</p>
 
-      <h2 id="privacy">Privacy</h2>
-      <p>DeskAuth never sends your authenticators, their names, codes or secret keys, or your passwords anywhere. It connects to the internet only:</p>
-      <ul>
-        <li>when you use <strong>Get icon</strong>, to the website you enter</li>
-        <li>to check GitHub for a new version when it starts. DeskAuth asks about this the first time it opens, and you can turn it off at any time in the options menu.</li>
-        <li>to send anonymous usage statistics, only if you agree when DeskAuth first opens. You can change this at any time in the options menu.</li>
-      </ul>
-      <p>See the <a href="privacy.html">privacy notice</a> for details. The third-party components above don't connect to the internet.</p>
+      <h2 id="store">The Microsoft Store version</h2>
+      <p>DeskAuth is being submitted to the Microsoft Store. Microsoft signs the apps it distributes through the Store, so that version will be signed by Microsoft rather than by us. See <a href="help.html#store">the Microsoft Store version</a> in the help.</p>
 
       <h2 id="problems">Reporting a problem</h2>
-      <p>If you think a signed file has been misused, or you have found a security problem, email <a href="mailto:security@deskauth.com">security@deskauth.com</a>. See the <a href="https://github.com/DeskAuth/DeskAuth/blob/main/SECURITY.md">security policy</a>.</p>
+      <p>If you find a DeskAuth file that doesn't match its checksum, or you have found a security problem, email <a href="mailto:security@deskauth.com">security@deskauth.com</a>. See the <a href="https://github.com/DeskAuth/DeskAuth/blob/main/SECURITY.md">security policy</a>.</p>
     </div>
   </main>
 
   <footer class="site-footer">
     <div class="container">
       <span>Copyright &copy; 2026 Nick Morphis and contributors. Based on WinAuth, &copy; 2010-2017 Colin Mackie. Free software under the <a href="https://github.com/DeskAuth/DeskAuth/blob/main/LICENSE">GNU GPL v3</a>.</span>
-      <span class="footer-links"><a href="https://github.com/DeskAuth/DeskAuth">Source code</a><a href="https://github.com/DeskAuth/DeskAuth/issues">Report a problem</a><a href="mailto:contact@deskauth.com">Contact</a><a href="privacy.html">Privacy</a><a href="code-signing.html">Code signing policy</a><a href="privacy.html#choices" data-cookie-settings>Cookie settings</a></span>
+      <span class="footer-links"><a href="https://github.com/DeskAuth/DeskAuth">Source code</a><a href="https://github.com/DeskAuth/DeskAuth/issues">Report a problem</a><a href="mailto:contact@deskauth.com">Contact</a><a href="privacy.html">Privacy</a><a href="code-signing.html">Code signing</a><a href="privacy.html#choices" data-cookie-settings>Cookie settings</a></span>
     </div>
   </footer>
 </body>

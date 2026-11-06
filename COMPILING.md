@@ -54,7 +54,7 @@ If the release workflow fails, fix the problem, move the tag if needed, and run 
 
 ### Code signing
 
-Releases are signed by [SignPath](https://signpath.io) under the [code signing policy](https://deskauth.com/code-signing.html). Signing is off until it is set up in the repository's **Settings → Secrets and variables → Actions**:
+Releases are not code signed (see [code signing](https://deskauth.com/code-signing.html)). The release workflow keeps its optional [SignPath](https://signpath.io) steps in case of a later application, and they stay off until these are set in the repository's **Settings → Secrets and variables → Actions**:
 
 | Name | Kind | Value |
 |---|---|---|

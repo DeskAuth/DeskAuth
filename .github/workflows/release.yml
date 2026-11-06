@@ -87,7 +87,7 @@ jobs:
             Copy-Item $files[0].FullName "release/$($build.Name)"
           }
 
-      # Signing with SignPath (see code-signing.html). Off until the repository variable
+      # Optional signing with SignPath, not currently used. Off until the repository variable
       # SIGNPATH_ORGANIZATION_ID is set; see COMPILING.md for the setup.
       - name: Upload the unsigned files for signing
         id: unsigned

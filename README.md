@@ -88,9 +88,9 @@ DeskAuth never sends your authenticators, codes, secret keys or passwords anywhe
 
 To report a security problem, email **security@deskauth.com** rather than opening a public issue. See the [security policy](SECURITY.md).
 
-## Code signing policy
+## Code signing
 
-Free code signing provided by [SignPath.io](https://signpath.io), certificate by [SignPath Foundation](https://signpath.org). Releases are built from this repository by GitHub Actions, and each is approved before signing. See the [code signing policy](https://deskauth.com/code-signing.html) for what is signed, the team roles and privacy.
+The downloads are not code signed, so Windows SmartScreen may warn you the first time you run one. Releases are built from this repository by GitHub Actions, and each release has a `SHA256SUMS.txt` file for checking the downloads. See [code signing](https://deskauth.com/code-signing.html).
 
 ## Removing DeskAuth
 
