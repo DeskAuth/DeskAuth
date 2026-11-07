@@ -4,7 +4,7 @@ DeskAuth is a portable, open-source authenticator for Windows. It generates the 
 
 DeskAuth is based on [WinAuth](https://github.com/winauth/winauth) by Colin Mackie, modernized and rewritten for .NET 10 and WPF.
 
-**[deskauth.com](https://deskauth.com/)** · **[Download](https://github.com/DeskAuth/DeskAuth/releases)** · **[Help](https://deskauth.com/help.html)** · **[Donate](https://deskauth.com/donate.html)**
+**[deskauth.com](https://deskauth.com/)** · **[Download](https://github.com/DeskAuth/DeskAuth/releases)** · **[Microsoft Store](https://apps.microsoft.com/detail/9p5n2stqrr5q)** · **[Help](https://deskauth.com/help.html)** · **[Donate](https://deskauth.com/donate.html)**
 
 <p align="center">
 <picture>
@@ -48,7 +48,13 @@ DeskAuth is based on [WinAuth](https://github.com/winauth/winauth) by Colin Mack
 ## Requirements
 
 * Windows 10 or 11
-* [.NET 10 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/10.0)
+* [.NET 10 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/10.0), except for the standalone download and the Microsoft Store version
+
+## Microsoft Store
+
+DeskAuth is also in the [Microsoft Store](https://apps.microsoft.com/detail/9p5n2stqrr5q) as **DeskAuth Authenticator**, or install it with `winget install 9P5N2STQRR5Q`. The Store installs and updates it, includes .NET, and signs it, so SmartScreen doesn't warn about it.
+
+The Store version keeps its own copy of your authenticators, copied from the downloaded version or WinAuth the first time it runs, and uninstalling it deletes them. See [the Microsoft Store version](https://deskauth.com/help.html#store).
 
 ## How to use
 
@@ -90,11 +96,11 @@ To report a security problem, email **security@deskauth.com** rather than openin
 
 ## Code signing
 
-The downloads are not code signed, so Windows SmartScreen may warn you the first time you run one. Releases are built from this repository by GitHub Actions, and each release has a `SHA256SUMS.txt` file for checking the downloads. See [code signing](https://deskauth.com/code-signing.html).
+The downloads from GitHub are not code signed, so Windows SmartScreen may warn you the first time you run one. Releases are built from this repository by GitHub Actions, and each release has a `SHA256SUMS.txt` file for checking the downloads. See [code signing](https://deskauth.com/code-signing.html).
 
 ## Removing DeskAuth
 
-There is nothing to uninstall. Untick **Start with Windows** in the gear menu, exit DeskAuth, then delete `DeskAuth.exe` and the `%APPDATA%\DeskAuth` folder. Export your authenticators first if you might need them: once deleted, they cannot be recovered. See [removing DeskAuth](https://deskauth.com/help.html#removing).
+There is nothing to uninstall. Untick **Start with Windows** in the gear menu, exit DeskAuth, then delete `DeskAuth.exe` and the `%APPDATA%\DeskAuth` folder. Export your authenticators first if you might need them: once deleted, they cannot be recovered. To remove the Microsoft Store version, export your authenticators if you need them, then uninstall it from the Start menu. See [removing DeskAuth](https://deskauth.com/help.html#removing).
 
 ## Donate
 
