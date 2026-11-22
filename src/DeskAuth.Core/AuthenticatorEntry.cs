@@ -100,6 +100,8 @@ public sealed class AuthenticatorEntry
         new(AuthenticatorKind.Totp)
         {
             Name = name,
+            // new authenticators show their code on demand; older files without the setting still show it automatically
+            AutoRefresh = false,
             Generator = new TotpGenerator(secret) { Digits = digits, Algorithm = algorithm, Period = period },
         };
 

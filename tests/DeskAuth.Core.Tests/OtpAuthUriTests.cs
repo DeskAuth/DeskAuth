@@ -19,6 +19,7 @@ public class OtpAuthUriTests
         Assert.Equal("48656C6C6F21DEADBEEF", Convert.ToHexString(entry.Generator!.SecretKey));
         Assert.Equal(6, entry.Generator.Digits);
         Assert.Equal(30, entry.Generator.Period);
+        Assert.False(entry.AutoRefresh);
     }
 
     [Fact]
